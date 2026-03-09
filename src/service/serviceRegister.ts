@@ -1,13 +1,13 @@
 "use server";
 
 import { apiClient } from "@/libs/api";
-import { RegisterState } from "@/libs/RegisterState";
+import { GeralState } from "@/libs/RegisterState";
 import { User } from "@/libs/types";
 
 export async function registerAction(
-  prevState: RegisterState | null,
+  prevState: GeralState | null,
   formData: FormData,
-): Promise<RegisterState> {
+): Promise<GeralState> {
   try {
     const payload = {
       name: formData.get("name") as string,

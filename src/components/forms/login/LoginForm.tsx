@@ -13,24 +13,27 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [state, formAction, isPending] = useActionState(ServiceLogin, null);
   const router = useRouter();
-    const { showToast } = useToast();
- 
+  const { showToast } = useToast();
+
+  // controla sucesso / erro
+
   // controla sucesso / erro
   useEffect(() => {
     if (!state) return;
 
     if (state.success) {
-      showToast("Registro realizado com sucesso", "success");
+      showToast(`${state.message}`, "success");
 
       setTimeout(() => {
-        router.push("/login");
+        router.push("/sobre");
       }, 1200);
     }
 
     if (state.error) {
       showToast(state.error, "error");
     }
-  },
+  }, [state, router, showToast]);
+
   return (
     <div className={styles.container}>
       <div className={styles.card}>

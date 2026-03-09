@@ -17,7 +17,7 @@ export default function Toast({
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
-    }, 2000);
+    }, 1400);
 
     return () => clearTimeout(timer);
   }, [onClose]);

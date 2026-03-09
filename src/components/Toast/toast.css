@@ -1,7 +1,7 @@
 .toast {
   position: fixed;
-  bottom: 20px;
-  left: 20px;
+  top: 20px; /* mudou aqui */
+  right: 20px;
 
   padding: 14px 20px;
   border-radius: 8px;

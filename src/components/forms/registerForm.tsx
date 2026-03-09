@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import styles from "./register.module.css";
 
 import { useToast } from "@/contexts/ToastContext";
+import { registerAction } from "@/service/serviceRegister";
 
 type RegisterState = {
   success: boolean;
@@ -16,9 +17,7 @@ type RegisterState = {
 export default function RegisterForm() {
   const router = useRouter();
   const { showToast } = useToast();
-
   const [showPassword, setShowPassword] = useState(false);
-
   const [state, formAction, isPending] = useActionState<
     RegisterState | null,
     FormData
