@@ -14,7 +14,7 @@ export default function LoginForm() {
   const [state, formAction, isPending] = useActionState(ServiceLogin, null);
   const router = useRouter();
     const { showToast } = useToast();
-    useEffect(() => {
+ 
   // controla sucesso / erro
   useEffect(() => {
     if (!state) return;
