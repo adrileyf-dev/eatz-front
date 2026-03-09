@@ -5,7 +5,7 @@ import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import styles from "./register.module.css";
-import { registerAction } from "@/actions/auth";
+
 import { useToast } from "@/contexts/ToastContext";
 
 type RegisterState = {

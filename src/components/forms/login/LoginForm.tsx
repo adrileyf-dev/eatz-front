@@ -1,18 +1,42 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import styles from "./login.module.css";
 
+import { ServiceLogin } from "@/service/serviceLogin";
+import { useRouter } from "next/navigation";
+
+import { useToast } from "@/contexts/ToastContext";
+
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const [state, formAction, isPending] = useActionState(ServiceLogin, null);
+  const router = useRouter();
+    const { showToast } = useToast();
+    useEffect(() => {
+  // controla sucesso / erro
+  useEffect(() => {
+    if (!state) return;
 
+    if (state.success) {
+      showToast("Registro realizado com sucesso", "success");
+
+      setTimeout(() => {
+        router.push("/login");
+      }, 1200);
+    }
+
+    if (state.error) {
+      showToast(state.error, "error");
+    }
+  },
   return (
     <div className={styles.container}>
       <div className={styles.card}>
         <h1 className={styles.logo}>EATZ</h1>
 
-        <form className={styles.form}>
+        <form className={styles.form} action={formAction}>
           <div className={styles.group}>
             <label htmlFor="email">Email</label>
             <input

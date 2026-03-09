@@ -1,13 +1,8 @@
 "use server";
 
 import { apiClient } from "@/libs/api";
+import { RegisterState } from "@/libs/RegisterState";
 import { User } from "@/libs/types";
-
-export type RegisterState = {
-  success: boolean;
-  message?: string;
-  error?: string;
-};
 
 export async function registerAction(
   prevState: RegisterState | null,
