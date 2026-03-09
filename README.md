@@ -1,12 +1,12 @@
 # 🍽️ EATZ
 
 **EATZ** é uma plataforma **SaaS moderna para gestão de pedidos e
-usuários**, desenvolvida com foco em performance, escalabilidade e
-experiência de usuário.
+usuários**, projetada com foco em **performance, escalabilidade e
+arquitetura orientada a eventos**.
 
-O projeto utiliza **Next.js no frontend**, **Node.js no backend**,
-**Prisma + PostgreSQL** para persistência de dados e **Docker** para
-facilitar o ambiente de desenvolvimento.
+A aplicação utiliza **Next.js no frontend**, **Node.js no backend**,
+**Prisma + PostgreSQL** para persistência de dados e **Apache Kafka**
+para comunicação assíncrona entre serviços.
 
 ---
 
@@ -31,6 +31,14 @@ facilitar o ambiente de desenvolvimento.
 - PostgreSQL
 - Prisma ORM
 
+## Event Streaming
+
+- Apache Kafka
+- Kafka UI
+
+Kafka é utilizado para comunicação assíncrona baseada em eventos entre
+os serviços.
+
 ## Infraestrutura
 
 - Docker
@@ -42,26 +50,95 @@ facilitar o ambiente de desenvolvimento.
 
 ---
 
+# 🧱 Arquitetura do Sistema
+
+O EATZ segue uma arquitetura moderna baseada em **API + Event
+Streaming**.
+
+            ┌───────────────┐
+            │   Next.js UI  │
+            │   Frontend    │
+            └───────┬───────┘
+                    │
+                    │ HTTP API
+                    ▼
+            ┌───────────────┐
+            │  Node Backend │
+            │  REST API     │
+            └───────┬───────┘
+                    │
+            ┌───────▼────────┐
+            │   Apache Kafka  │
+            │ Event Streaming │
+            └───────┬────────┘
+                    │
+         ┌──────────┴──────────┐
+         ▼                     ▼
+    ┌─────────────┐     ┌─────────────┐
+    │  Consumers  │     │  Workers    │
+    │  Services   │     │  Async Jobs │
+    └──────┬──────┘     └──────┬──────┘
+           │                   │
+           └─────────┬─────────┘
+                     ▼
+              ┌───────────────┐
+              │ PostgreSQL DB │
+              │ Prisma ORM    │
+              └───────────────┘
+
+---
+
+# 📡 Arquitetura de Eventos (Kafka)
+
+Kafka permite que o sistema processe eventos de forma escalável.
+
+Fluxo de eventos:
+
+    Client Request
+          │
+          ▼
+    Backend API
+          │
+          ▼
+    Kafka Producer
+          │
+          ▼
+    Kafka Broker
+          │
+          ▼
+    Kafka Consumer
+          │
+          ▼
+    Background Processing / Services
+
+Exemplos de eventos:
+
+- user.created
+- order.created
+- order.updated
+- notification.send
+
+---
+
 # 📁 Estrutura do Projeto
 
     eatz/
     │
-    ├── eatz-front/           # Frontend Next.js
+    ├── eatz-front/
     │   ├── src
     │   │   ├── app
     │   │   ├── components
     │   │   ├── actions
     │   │   ├── services
     │   │   └── styles
-    │   │
-    │   └── public
     │
-    ├── eatz-backend/         # Backend Node.js
+    ├── eatz-backend/
     │   ├── src
     │   │   ├── controllers
     │   │   ├── services
     │   │   ├── prisma
     │   │   ├── routes
+    │   │   ├── kafka
     │   │   └── middlewares
     │
     ├── docker
@@ -70,9 +147,42 @@ facilitar o ambiente de desenvolvimento.
 
 ---
 
+# 🐳 Infraestrutura Docker
+
+Serviços utilizados no ambiente de desenvolvimento:
+
+    PostgreSQL
+    Backend Node
+    Apache Kafka
+    Kafka UI
+    Frontend Next.js
+
+Arquitetura Docker:
+
+            Docker Network
+     ┌───────────────────────────┐
+     │                           │
+     │  Next.js Frontend         │
+     │        │                  │
+     │        ▼                  │
+     │    Node Backend           │
+     │        │                  │
+     │        ▼                  │
+     │     Apache Kafka          │
+     │        │                  │
+     │        ▼                  │
+     │      Consumers            │
+     │        │                  │
+     │        ▼                  │
+     │     PostgreSQL            │
+     │                           │
+     └───────────────────────────┘
+
+---
+
 # ⚙️ Instalação do Projeto
 
-## 1️⃣ Clonar o repositório
+## Clonar repositório
 
 ```bash
 git clone https://github.com/seu-usuario/eatz.git
@@ -81,28 +191,23 @@ cd eatz
 
 ---
 
-# 🐳 Rodando com Docker
+# 🐳 Rodar com Docker
 
-Subir todos os serviços:
-
-```bash
-docker-compose up -d
-```
+    docker-compose up -d
 
 ---
 
 # 🗄️ Configuração do Backend
 
-```bash
-cd eatz-backend
-npm install
-```
+    cd eatz-backend
+    npm install
 
-Criar arquivo `.env`:
+Criar `.env`
 
     DATABASE_URL=postgresql://admin:admin@localhost:5436/dev
     JWT_SECRET=your_secret
     PORT=3333
+
     CLOUDINARY_CLOUD_NAME=your_cloud
     CLOUDINARY_API_KEY=your_key
     CLOUDINARY_API_SECRET=your_secret
@@ -111,18 +216,19 @@ Criar arquivo `.env`:
 
 # 🧬 Prisma
 
-```bash
-npx prisma generate
-npx prisma migrate dev
-```
+Gerar client:
+
+    npx prisma generate
+
+Rodar migrations:
+
+    npx prisma migrate dev
 
 ---
 
 # ▶️ Iniciar Backend
 
-```bash
-npm run dev
-```
+    npm run dev
 
 Servidor:
 
@@ -130,13 +236,11 @@ Servidor:
 
 ---
 
-# 💻 Configuração do Frontend
+# 💻 Frontend
 
-```bash
-cd eatz-front
-npm install
-npm run dev
-```
+    cd eatz-front
+    npm install
+    npm run dev
 
 Aplicação:
 
@@ -146,15 +250,17 @@ Aplicação:
 
 # 🔐 Autenticação
 
-O sistema utiliza **JWT**.
+Autenticação baseada em **JWT**.
 
-Header utilizado:
+Header:
 
     Authorization: Bearer TOKEN
 
 ---
 
 # 👥 Sistema de Roles
+
+Controle de acesso baseado em roles.
 
 Exemplo:
 
@@ -164,41 +270,25 @@ Exemplo:
 
 ---
 
-# 📦 Upload de Imagens
+# 📦 Upload de Arquivos
 
-Upload realizado com **Cloudinary**.
+Upload realizado via **Cloudinary**.
 
 Usado para:
 
 - Avatar de usuários
 - Imagens de produtos
-- Arquivos de mídia
+- Mídia
 
 ---
 
-# 🎨 Design
+# 📊 Roadmap
 
-Padrões do frontend:
-
-- Light Theme
-- UI moderna
-- CSS Modules
-- Separação entre **TSX e CSS**
-
-Exemplo:
-
-    login.tsx
-    login.module.css
-
----
-
-# 📊 Futuras Funcionalidades
-
-- Sistema de pedidos
+- Sistema completo de pedidos
 - Dashboard administrativo
-- Notificações
-- Integração com filas (Kafka)
-- Relatórios
+- Sistema de notificações
+- Integração com microserviços
+- Observabilidade
 - API pública
 
 ---
