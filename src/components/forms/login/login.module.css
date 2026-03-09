@@ -1,0 +1,116 @@
+.container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f7fb;
+}
+
+.card {
+  width: 380px;
+  padding: 40px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #444;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+}
+
+.group label {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.group input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.group input:focus {
+  border-color: #6366f1;
+  outline: none;
+}
+
+.passwordField {
+  display: flex;
+}
+
+.passwordField input {
+  flex: 1;
+}
+
+.showButton {
+  margin-left: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6366f1;
+}
+
+.button {
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: #6366f1;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.button:disabled {
+  opacity: 0.7;
+}
+
+.footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+.passwordField {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordField input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.eyeButton {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  display: flex;
+  align-items: center;
+}
+
+.eyeButton:hover {
+  color: #000;
+}
