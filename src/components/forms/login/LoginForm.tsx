@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { use, useActionState, useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import styles from "./login.module.css";
 
@@ -8,6 +8,9 @@ import { ServiceLogin } from "@/service/serviceLogin";
 import { useRouter } from "next/navigation";
 
 import { useToast } from "@/contexts/ToastContext";
+import { getUserLog } from "@/libs/libsUtil";
+import router from "next/router";
+const user = await getUserLog();
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -25,7 +28,7 @@ export default function LoginForm() {
       showToast(`${state.message}`, "success");
 
       setTimeout(() => {
-        router.push("/sobre");
+        router.push("/dashboard");
       }, 1200);
     }
 
@@ -74,6 +77,7 @@ export default function LoginForm() {
           </div>
 
           <button className={styles.button}>Sign In</button>
+          {state?.error && <div className={styles.error}>{state.error}</div>}
         </form>
         <label>Versão 1.0</label>
       </div>

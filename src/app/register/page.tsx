@@ -1,4 +1,5 @@
-import RegisterForm from "@/components/forms/registerForm";
+"use server";
+import RegisterForm from "@/components/forms/register/registerForm";
 
 export default function Register() {
   return (

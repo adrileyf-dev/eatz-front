@@ -1,7 +1,7 @@
 "use server";
 
 import { apiClient } from "@/libs/api";
-import { GeralState } from "@/libs/RegisterState";
+import { GeralState } from "@/libs/typeState";
 import { User } from "@/libs/types";
 
 export async function registerAction(

@@ -1,7 +1,8 @@
 "use server";
 import { apiClient } from "@/libs/api";
 import AuthRespose from "@/libs/AuthResponse";
-import { GeralState } from "@/libs/RegisterState";
+import { setToken } from "@/libs/getCookies";
+import { GeralState } from "@/libs/typeState";
 
 export async function ServiceLogin(
   prevState: GeralState | null,
@@ -16,7 +17,7 @@ export async function ServiceLogin(
       method: "POST",
       body: JSON.stringify(payload),
     });
-    console.log(login);
+    await setToken(login.token);
     return {
       success: true,
       message: "Login Realizado com sucesso",

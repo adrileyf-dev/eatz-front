@@ -8,6 +8,7 @@ import styles from "./register.module.css";
 
 import { useToast } from "@/contexts/ToastContext";
 import { registerAction } from "@/service/serviceRegister";
+import { getUserLog } from "@/libs/libsUtil";
 
 type RegisterState = {
   success: boolean;

@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
+const API_URL = process.env.API_URL as string;
 
 export function getApiUrl() {
   return API_URL;
@@ -40,5 +40,6 @@ export async function apiClient<T>(
 
     throw new Error(error.error || "Erro de requisição");
   }
-  return response.json();
+
+  return (await response.json()) as T;
 }
