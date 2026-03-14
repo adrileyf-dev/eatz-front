@@ -5,19 +5,15 @@ import { usePathname } from "next/navigation";
 import { ServiceLogout } from "@/service/serviceLogout";
 import Link from "next/link";
 
+import { menuItemApp } from "./../../lib/menuItem";
+
 interface SidebarProps {
   username: string;
 }
 
-const menuItem = [
-  { title: "Pedidos", href: "/dashboard", icon: ShoppingCart },
-  { title: "Produtos", href: "/dashboard/products", icon: Package },
-  { title: "Categorias", href: "/dashboard/categories", icon: Tags },
-  { title: "Usuários", href: "/dashboard/register", icon: User },
-];
-
 export default function Sidebar({ username }: SidebarProps) {
   const pathname = usePathname();
+
   return (
     <aside className={styles.sidebar}>
       <div className={styles.logo}>EATZ</div>
@@ -25,7 +21,7 @@ export default function Sidebar({ username }: SidebarProps) {
         Usuário: <strong>{username}</strong>
       </div>
       <nav className={styles.menu}>
-        {menuItem.map((menu) => {
+        {menuItemApp.map((menu) => {
           const Icon = menu.icon;
           const isActive = pathname === menu.href;
           return (
