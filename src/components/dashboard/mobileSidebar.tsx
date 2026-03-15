@@ -17,12 +17,7 @@ import {
 
 import { useState } from "react";
 import { Button } from "../ui/button";
-const menuItem = [
-  { title: "Pedidos", href: "/dashboard", icon: ShoppingCart },
-  { title: "Produtos", href: "/dashboard/products", icon: Package },
-  { title: "Categorias", href: "/dashboard/categories", icon: Tags },
-  { title: "Usuários", href: "/dashboard/register", icon: User },
-];
+import { menuItemApp } from "./../../lib/menuItem";
 
 interface SidebarProps {
   username: string;
@@ -48,7 +43,7 @@ export function MobileSideBar() {
                 </SheetTitle>
               </SheetHeader>
               <nav className="flex flex-col p-4 space-y-4">
-                {menuItem.map((menu) => {
+                {menuItemApp.map((menu) => {
                   const Icon = menu.icon;
                   const isActive = pathname === menu.href;
                   return (

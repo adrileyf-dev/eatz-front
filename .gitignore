@@ -18,8 +18,8 @@
 /out/
 
 # production
-/build
-
+/buildnpm
+.env
 # misc
 .DS_Store
 *.pem

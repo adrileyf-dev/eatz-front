@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import styles from "./categories.module.css";
 
 export default function CategoryForm() {
@@ -21,9 +22,10 @@ export default function CategoryForm() {
             />
           </div>
 
-          <button className={styles.button} type="submit">
+          <Button className={styles.button} type="submit">
+            {" "}
             Cadastrar
-          </button>
+          </Button>
         </form>
 
         <label className={styles.version}>Versão 1.0</label>

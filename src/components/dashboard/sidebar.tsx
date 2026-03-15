@@ -6,6 +6,7 @@ import { ServiceLogout } from "@/service/serviceLogout";
 import Link from "next/link";
 
 import { menuItemApp } from "./../../lib/menuItem";
+import { Button } from "../ui/button";
 
 interface SidebarProps {
   username: string;
@@ -38,10 +39,10 @@ export default function Sidebar({ username }: SidebarProps) {
       </nav>
 
       <form className={styles.logoutForm} action={ServiceLogout}>
-        <button type="submit" className={styles.logoutButton}>
+        <Button type="submit" className={styles.logoutButton}>
           <LogOut size={18} />
           <span>Sair</span>
-        </button>
+        </Button>
       </form>
     </aside>
   );
