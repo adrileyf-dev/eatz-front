@@ -10,12 +10,14 @@ export default async function DashbordLayout({
 }) {
   const user = await authenticatedAdmin();
   return (
-    <div className="container">
+    <div className="flex h-screen overflow-hidden">
       {/*SiderBar desktop */}
       <SiderBar username={user.name} />
       <div className="flex flex-1 flex-col overflow-hidden">
         <MobileSideBar />
-        <main className=" container max-w-full px-4 py-6">{children}</main>
+        <main className="flex-1 overflow-y-auto bg-app-background">
+          <div className="container max-w-full px-4 py-6">{children}</div>
+        </main>
       </div>
     </div>
   );

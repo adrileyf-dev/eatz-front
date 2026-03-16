@@ -1,5 +1,13 @@
 "use client";
-import { LogOut, Menu, Package, ShoppingCart, Tags, User } from "lucide-react";
+import {
+  LogOut,
+  Menu,
+  Package,
+  ShoppingCart,
+  Tags,
+  TvIcon,
+  User,
+} from "lucide-react";
 import styles from "./sidebar.module.css";
 import { usePathname } from "next/navigation";
 import { ServiceLogout } from "@/service/serviceLogout";
@@ -31,16 +39,14 @@ export function MobileSideBar() {
       <header className="sticky top-0 z-50 border-b border-b-blue-500 border-bs-indigo-500">
         <div className="flex h-16 items-center justify-between px-4">
           <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger>
+            <SheetTrigger asChild>
               <Button variant={"ghost"} size={"icon"}>
                 <Menu className="h-6 w-6"></Menu>
               </Button>
             </SheetTrigger>
             <SheetContent className="w-72 border-b-blue-500" side="left">
               <SheetHeader className="border-b border-b-blue-500 p-6">
-                <SheetTitle className="text-1 font-bold text-blue-700">
-                  Menu
-                </SheetTitle>
+                <SheetTitle className="text-1 font-bold text-blue-700"></SheetTitle>
               </SheetHeader>
               <nav className="flex flex-col p-4 space-y-4">
                 {menuItemApp.map((menu) => {

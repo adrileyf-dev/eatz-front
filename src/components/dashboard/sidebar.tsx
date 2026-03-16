@@ -29,7 +29,7 @@ export default function Sidebar({ username }: SidebarProps) {
             <Link
               key={menu.title}
               href={menu.href}
-              className={`${styles.link} ${isActive ? styles.active : styles.link}`}
+              className={`${styles.link} ${isActive ? styles.active : styles.linkN}`}
             >
               <Icon size={18} />
               {menu.title}
@@ -39,10 +39,10 @@ export default function Sidebar({ username }: SidebarProps) {
       </nav>
 
       <form className={styles.logoutForm} action={ServiceLogout}>
-        <Button type="submit" className={styles.logoutButton}>
+        <button type="submit" className={styles.logoutButton}>
           <LogOut size={18} />
           <span>Sair</span>
-        </Button>
+        </button>
       </form>
     </aside>
   );

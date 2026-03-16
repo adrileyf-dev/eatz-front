@@ -70,7 +70,11 @@
   font-weight: bold;
   cursor: pointer;
 }
-
+.icon svg {
+  width: 30px;
+  height: 30px;
+  color: white;
+}
 .eyeButton:hover {
   color: #000;
 }

@@ -17,6 +17,8 @@ export async function ServiceLogin(
       method: "POST",
       body: JSON.stringify(payload),
     });
+
+    console.log(payload);
     await setToken(login.token);
     return {
       success: true,
