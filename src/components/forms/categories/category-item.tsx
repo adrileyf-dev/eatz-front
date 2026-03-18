@@ -1,8 +1,6 @@
 "use client";
-
 import { categorie } from "@/libs/types";
 import { Tags } from "lucide-react";
-import CategoryActions from "./category-actions";
 
 interface Props {
   category: categorie;
@@ -32,12 +30,10 @@ export default function CategoryItem({ category }: Props) {
         <div>
           <p className="font-semibold">{category.name}</p>
           <span className="text-xs text-[var(--color-text-muted)]">
-            ID: {category.id}
+            {/* ID: {category.id} */}
           </span>
         </div>
       </div>
-
-      <CategoryActions category={category} />
     </div>
   );
 }

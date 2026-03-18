@@ -4,7 +4,7 @@ import { ToastProvider } from "@/contexts/ToastContext";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "EATZ",
@@ -13,12 +13,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)}>
-      <body>
+    <html lang="pt-BR" className={cn("font-sans", geist.variable)}>
+      <body className="bg-[--color-bg] text-[--color-text]">
         <ToastProvider>{children}</ToastProvider>
       </body>
     </html>

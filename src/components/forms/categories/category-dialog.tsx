@@ -1,18 +1,18 @@
 "use client";
-
 import { ReactNode, useState } from "react";
 import { categorie } from "@/libs/types";
-
-import { Button } from "@/components/ui/button";
 
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
 interface Props {
@@ -20,62 +20,48 @@ interface Props {
   category?: categorie;
 }
 
-export default function CategoryDialog({ children, category }: Props) {
-  const [name, setName] = useState(category?.name || "");
-
-  const isEdit = !!category;
-
+export default function CategoryDialog() {
+  ///const isEdit = !!category;
+  const [open, setOpen] = useState(false);
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        {children ? (
-          children
-        ) : (
-          <Button className="hover:bg-primary/90">Nova categoria</Button>
-        )}
-      </DialogTrigger>
+    <>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>
+          <Button className="flex items-center bg-(--color-primary) gap-2 text-bg(--color-text) ">
+            <Plus className="h-4 w-4" />
+            Nova Categoria
+          </Button>
+        </DialogTrigger>
 
-      {/* 🔥 modal maior + fundo visível */}
-      <DialogContent className="sm:max-w-lg bg-background border rounded-xl">
-        <DialogHeader>
-          <DialogTitle className="text-lg font-semibold">
-            {isEdit ? "Editar Categoria" : "Nova Categoria"}
-          </DialogTitle>
-        </DialogHeader>
+        <DialogContent
+          className="
+      bg-(--color-card)
+      text-(--color-text)
+      border border-(--color-border)
+      max-w-lg
+    "
+        >
+          <DialogHeader>
+            <DialogTitle className="text-lg font-semibold">
+              Criar Nova Categoria
+            </DialogTitle>
 
-        <form className="space-y-5">
-          {/* 🔥 input melhorado */}
-          <div className="space-y-1">
-            <span className="text-sm text-muted-foreground">
-              Nome da categoria
-            </span>
-
-            <Input
-              placeholder="Ex: Pizzas, Bebidas..."
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="bg-background border"
-            />
-          </div>
-
-          {/* 🔥 botões corrigidos */}
-          <div className="flex justify-end gap-3 pt-2">
-            <Button
-              type="button"
-              className="bg-gray-200 text-black hover:bg-gray-300"
-            >
-              Cancelar
-            </Button>
-
-            <Button
-              type="submit"
-              className="bg-primary text-white hover:bg-primary/90"
-            >
-              Salvar
-            </Button>
-          </div>
-        </form>
-      </DialogContent>
-    </Dialog>
+            <DialogDescription className="text-bg(--color-text-muted)"></DialogDescription>
+          </DialogHeader>
+          <form className="space-y-4">
+            <div>
+              <Label htmlFor="category">Nome da Categoria</Label>
+              <Input
+                id="name"
+                name="name"
+                required
+                placeholder="Digite o Nome da Categoria..."
+                className="border-2 border-b-black"
+              ></Input>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
