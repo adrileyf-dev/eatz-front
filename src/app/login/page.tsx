@@ -5,8 +5,8 @@ export default async function Login() {
   const user = await getUserLog();
 
   return (
-    <div>
-      <div>
+    <div className="bg-app-background min-h-screen flex items-center justify-center px-4 py-8">
+      <div className="w-full">
         <LoginForm />
       </div>
     </div>

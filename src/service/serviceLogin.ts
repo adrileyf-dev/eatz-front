@@ -13,13 +13,13 @@ export async function ServiceLogin(
       email: formData.get("email") as string,
       password: formData.get("password") as string,
     };
-    const login = await apiClient<AuthRespose>("/sessions", {
+    await apiClient<AuthRespose>("/sessions", {
       method: "POST",
       body: JSON.stringify(payload),
     });
 
     console.log(payload);
-    await setToken(login.token);
+    //  await setToken(login.token);
     return {
       success: true,
       message: "Login Realizado com sucesso",

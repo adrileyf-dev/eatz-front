@@ -27,9 +27,7 @@ export default function LoginForm() {
     if (state.success) {
       showToast(`${state.message}`, "success");
 
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 1200);
+      router.push("/dashboard");
     }
 
     if (state.error) {
