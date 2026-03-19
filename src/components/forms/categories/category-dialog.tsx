@@ -35,28 +35,25 @@ export default function CategoryDialog() {
 
         <DialogContent
           className="
-      bg-(--color-card)
-      text-(--color-text)
-      border border-(--color-border)
-      max-w-lg
-    "
+             bg-(--color-card)
+            text-(--color-text)
+             border border-(--color-border)
+            max-w-lg"
         >
           <DialogHeader>
             <DialogTitle className="text-lg font-semibold">
               Criar Nova Categoria
             </DialogTitle>
-
-            <DialogDescription className="text-bg(--color-text-muted)"></DialogDescription>
           </DialogHeader>
           <form className="space-y-4">
             <div>
-              <Label htmlFor="category">Nome da Categoria</Label>
+              <Label htmlFor="category">Categoria</Label>
               <Input
                 id="name"
                 name="name"
                 required
                 placeholder="Digite o Nome da Categoria..."
-                className="border-2 border-b-black"
+                className=" border-b-black"
               ></Input>
             </div>
           </form>
