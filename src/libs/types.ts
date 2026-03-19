@@ -5,7 +5,7 @@ export interface User {
   role: "ADMIN" | "STAFF";
   createdAt: string;
 }
-export interface categorie {
+export interface Category {
   id: string;
   name: string;
   createdAt: string;

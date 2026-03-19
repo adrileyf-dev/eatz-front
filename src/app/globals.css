@@ -1,280 +1,291 @@
 /* ================================
-   EATZ - Global Style System
+   EATZ - Design System (Clean SaaS)
+   DOCUMENTADO PARA USO EM TSX
    ================================ */
+
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* Dark mode via class="dark" */
 @custom-variant dark (&:is(.dark *));
+
+/* =================================
+   🎨 TOKENS DE DESIGN (ROOT)
+   ================================= */
 :root {
-  /* ================= Cores ================= */
-  --color-primary: #2563eb;
-  --color-primary-dark: #1d4ed8;
+  /* ===== PRIMARY ===== */
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
 
-  --color-secondary: #0f172a;
+  /* USO NO TSX:
+     className="bg-[var(--color-primary)]"
+     className="text-[var(--color-primary)]"
+  */
 
+  /* ===== BACKGROUND ===== */
+  --color-bg-main: #f6f8fb;
+  --color-bg-card: #ffffff;
+  --color-bg-muted: #eef2f7;
+
+  /* USO:
+     className="bg-[var(--color-bg-main)]"
+     className="bg-[var(--color-bg-card)]"
+  */
+
+  /* ===== TEXTO ===== */
+  --color-text-main: #0f172a;
+  --color-text-muted: #64748b;
+  --color-text-light: #94a3b8;
+
+  /* USO:
+     className="text-[var(--color-text-main)]"
+     className="text-[var(--color-text-muted)]"
+  */
+
+  /* ===== FEEDBACK ===== */
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-danger: #ef4444;
 
-  /* ================= Background ================= */
-  --color-bg-main: #f8fafc;
-  --color-bg-card: #ffffff;
-  --color-bg-muted: #f1f5f9;
+  /* USO:
+     className="text-[var(--color-success)]"
+     className="bg-[var(--color-danger)]"
+  */
 
-  /* ================= Texto ================= */
-  --color-text-main: #020617;
-  --color-text-muted: #64748b;
-  --color-text-light: #94a3b8;
+  /* ===== BORDER ===== */
+  --color-border: #e5e7eb;
 
-  /* ================= Bordas ================= */
-  --color-border: #e2e8f0;
+  /* USO:
+     className="border border-[var(--color-border)]"
+  */
 
-  /* ================= Radius ================= */
-  --radius-sm: 6px;
-  --radius-md: 10px;
+  /* ===== RADIUS ===== */
+  --radius-sm: 8px;
+  --radius-md: 12px;
   --radius-lg: 16px;
 
-  /* ================= Shadow ================= */
-  --shadow-sm: 0 2px 8px rgba(2, 6, 23, 0.05);
-  --shadow-md: 0 10px 30px rgba(2, 6, 23, 0.08);
-  --shadow-lg: 0 20px 40px rgba(2, 6, 23, 0.12);
+  /* USO:
+     className="rounded-[var(--radius-md)]"
+  */
 
-  /* ================= Font ================= */
-  --font-main: Inter, system-ui, Arial, sans-serif;
+  /* ===== SHADOW ===== */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+  /* USO:
+     className="shadow-[var(--shadow-sm)]"
+  */
+
+  /* ===== FONT ===== */
+  --font-main: Inter, system-ui, sans-serif;
+
+  /* USO:
+     já aplicado no body automaticamente
+  */
+
+  /* =================================
+     🔥 SHADCN BASE (IMPORTANTE)
+     ================================= */
+
+  /* USO DIRETO NO TSX (RECOMENDADO):
+     className="bg-background text-foreground"
+  */
+
   --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --foreground: oklch(0.15 0 0);
+
+  /* USO:
+     bg-background
+     text-foreground
+  */
+
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.809 0.105 251.813);
-  --chart-2: oklch(0.623 0.214 259.815);
-  --chart-3: oklch(0.546 0.245 262.881);
-  --chart-4: oklch(0.488 0.243 264.376);
-  --chart-5: oklch(0.424 0.199 265.638);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --card-foreground: oklch(0.15 0 0);
+
+  /* USO:
+     className="bg-card text-card-foreground"
+  */
+
+  --primary: oklch(0.55 0.2 260);
+  --primary-foreground: oklch(0.98 0 0);
+
+  /* USO:
+     className="bg-primary text-primary-foreground"
+  */
+
+  --secondary: oklch(0.96 0 0);
+  --secondary-foreground: oklch(0.2 0 0);
+
+  /* USO:
+     className="bg-secondary text-secondary-foreground"
+  */
+
+  --muted: oklch(0.96 0 0);
+  --muted-foreground: oklch(0.55 0 0);
+
+  /* USO:
+     className="bg-muted text-muted-foreground"
+  */
+
+  --border: oklch(0.9 0 0);
+  --input: oklch(0.9 0 0);
+  --ring: oklch(0.7 0 0);
+
+  /* USO:
+     border-border
+     ring-ring
+  */
+
+  --radius: 0.75rem;
 }
 
-/* ================= Reset ================= */
+/* =================================
+   🌙 DARK MODE
+   ================================= */
+.dark {
+  --background: oklch(0.14 0 0);
+  --foreground: oklch(0.95 0 0);
 
+  --card: oklch(0.2 0 0);
+  --card-foreground: oklch(0.95 0 0);
+
+  --primary: oklch(0.7 0.2 260);
+  --primary-foreground: oklch(0.1 0 0);
+
+  --secondary: oklch(0.25 0 0);
+  --secondary-foreground: oklch(0.95 0 0);
+
+  --muted: oklch(0.25 0 0);
+  --muted-foreground: oklch(0.7 0 0);
+}
+
+/* =================================
+   RESET
+   ================================= */
 *,
 *::before,
 *::after {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
-html {
-  height: 100%;
-}
-
 body {
-  min-height: 100%;
+  min-height: 100vh;
+  font-family: var(--font-main);
+
   background: var(--color-bg-main);
   color: var(--color-text-main);
-
-  font-family: var(--font-main);
-  font-size: 14px;
-  line-height: 1.5;
 }
 
-img,
-picture,
-video,
-canvas,
-svg {
-  display: block;
-  max-width: 100%;
-}
+/* =================================
+   🧱 COMPONENTES PRONTOS
+   ================================= */
 
-input,
-button,
-textarea,
-select {
-  font: inherit;
-}
-
-button {
-  border: none;
-  background: none;
-}
-
-ul,
-ol {
-  list-style: none;
-}
-
-a {
-  color: var(--color-primary);
-  text-decoration: none;
-  font-weight: 500;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-/* ================================
-   Layout Principal
-   ================================ */
-
-.app-layout {
-  min-height: 100vh;
-  display: flex;
-  background: var(--color-bg-main);
-}
-
-/* ================= Header ================= */
-
-.app-header {
-  height: 60px;
-  background: var(--color-bg-card);
-
-  border-bottom: 1px solid var(--color-border);
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 0 24px;
-}
-
-/* ================= Card ================= */
-
+/* CARD */
+/* USO:
+   <div className="card">
+*/
 .card {
   background: var(--color-bg-card);
   border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
   box-shadow: var(--shadow-sm);
-
   padding: 20px;
 }
 
-/* ================= Botões ================= */
-
+/* BOTÃO */
+/* USO:
+   <button className="btn btn-primary">
+*/
 .btn {
-  height: 42px;
-  padding: 0 18px;
-
+  height: 40px;
+  padding: 0 16px;
   border-radius: var(--radius-md);
-
   font-size: 14px;
-  font-weight: 600;
-
-  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
 }
 
 .btn-primary {
   background: var(--color-primary);
-  color: #fff;
+  color: white;
 }
 
 .btn-primary:hover {
-  background: var(--color-primary-dark);
+  background: var(--color-primary-hover);
 }
 
 .btn-secondary {
   background: var(--color-bg-muted);
-  color: var(--color-text-main);
 }
 
-/* ================= Inputs ================= */
-
+/* INPUT */
+/* USO:
+   <input className="input" />
+*/
 .input {
-  height: 42px;
+  height: 40px;
   width: 100%;
-
-  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-
-  padding: 0 14px;
-
-  font-size: 14px;
+  border: 1px solid var(--color-border);
+  padding: 0 12px;
 }
 
 .input:focus {
-  outline: none;
   border-color: var(--color-primary);
+  outline: none;
 }
 
-/* ================= Main Center ================= */
+/* =================================
+   🧠 UTILIDADES
+   ================================= */
 
-/* ================= Main Center ================= */
-
-.main-center {
-  flex: 1;
-
-  display: flex;
-  justify-content: center; /* centro horizontal */
-  align-items: flex-start; /* topo vertical */
-
-  padding: 60px 32px;
-}
-/* ================= Responsivo ================= */
-.container {
-  display: flex;
-  height: 100vh;
-  overflow: hidden;
+/* container central */
+/* USO:
+   <div className="container-app">
+*/
+.container-app {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-@media (max-width: 900px) {
-  .main-content {
-    padding: 20px;
-  }
+/* título */
+/* USO:
+   <h1 className="title">
+*/
+.title {
+  font-size: 20px;
+  font-weight: 600;
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.809 0.105 251.813);
-  --chart-2: oklch(0.623 0.214 259.815);
-  --chart-3: oklch(0.546 0.245 262.881);
-  --chart-4: oklch(0.488 0.243 264.376);
-  --chart-5: oklch(0.424 0.199 265.638);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+/* subtítulo */
+/* USO:
+   <p className="subtitle">
+*/
+.subtitle {
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+/* divider */
+/* USO:
+   <div className="divider" />
+*/
+.divider {
+  height: 1px;
+  background: var(--color-border);
+}
+
+/* hover card */
+/* USO:
+   <div className="card hover-card">
+*/
+.hover-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 @theme inline {

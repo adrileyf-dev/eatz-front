@@ -4,12 +4,12 @@ import CategoryDialog from "@/components/forms/categories/category-dialog";
 import CategoryItem from "@/components/forms/categories/category-item";
 import { apiClient } from "@/libs/api";
 import { getToken } from "@/libs/getCookies";
-import { categorie } from "@/libs/types";
+import { Category } from "@/libs/types";
 
 export default async function Categories() {
   const token = await getToken();
 
-  const categories = await apiClient<categorie[]>("/categories", {
+  const categories = await apiClient<Category[]>("/categories", {
     token: token!,
   });
 
