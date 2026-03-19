@@ -4,6 +4,7 @@ import { apiClient } from "@/libs/api";
 import { getToken } from "@/libs/getCookies";
 import { Category } from "@/libs/types";
 import { GeralState } from "@/libs/typeState";
+import { revalidatePath } from "next/cache";
 
 export async function ServiceCategories(
   prevState: GeralState | null,
@@ -11,10 +12,21 @@ export async function ServiceCategories(
 ): Promise<GeralState> {
   try {
     const token = await getToken();
-    console.log(token);
 
-    const payLoad = { name: formData.get("name") as string };
-    console.log(payLoad);
+    const name = formData.get("name") as string;
+
+    // ✅ VALIDAÇÃO
+    if (!name || name.trim() === "") {
+      return {
+        success: false,
+        message: "Nome da Categoria Obrigatorio ",
+        errors: {
+          name: "Nome é obrigatório",
+        },
+      };
+    }
+
+    const payLoad = { name };
 
     await apiClient<Category>("/categories", {
       method: "POST",
@@ -22,14 +34,23 @@ export async function ServiceCategories(
       token,
     });
 
+    // ✅ atualiza lista
+    revalidatePath("/dashboard/categories");
+
     return {
       success: true,
       message: "Categoria cadastrada com sucesso",
     };
-  } catch (err) {
+  } catch (err: any) {
+    console.error("Register error:", err);
+
+    // 🔥 ERRO VINDO DA API
+    const apiError = err?.response?.data;
+
     return {
       success: false,
-      error: "Erro ao cadastrar categoria",
+      message: apiError?.message || "Erro ao cadastrar categoria",
+      errors: apiError?.errors || {},
     };
   }
 }
