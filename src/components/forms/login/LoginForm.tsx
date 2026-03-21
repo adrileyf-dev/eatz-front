@@ -16,7 +16,7 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [state, formAction, isPending] = useActionState(ServiceLogin, null);
   const router = useRouter();
-  const { showToast } = useToast();
+  //const { showToast } = useToast();
 
   // controla sucesso / erro
 
@@ -25,15 +25,15 @@ export default function LoginForm() {
     if (!state) return;
 
     if (state.success) {
-      showToast(`${state.message}`, "success");
+      //  showToast(`${state.message}`, "success");
 
       router.push("/dashboard");
     }
 
     if (state.error) {
-      showToast(state.error, "error");
+      //showToast(state.error, "error");
     }
-  }, [state, router, showToast]);
+  }, [state, router]);
 
   return (
     <div className={styles.container}>
@@ -49,6 +49,7 @@ export default function LoginForm() {
               name="email"
               placeholder="seu@email.com"
               required
+              role="alert"
             />
           </div>
 

@@ -1,9 +1,9 @@
 "use client";
-import { categorie } from "@/libs/types";
+import { Category } from "@/libs/types";
 import { Tags } from "lucide-react";
 
 interface Props {
-  category: categorie;
+  category: Category;
 }
 
 export default function CategoryItem({ category }: Props) {

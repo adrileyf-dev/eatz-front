@@ -1,6 +1,5 @@
 "use client";
 import { ReactNode, useEffect, useState } from "react";
-import { categorie } from "@/libs/types";
 
 import {
   Dialog,
@@ -18,14 +17,15 @@ import { Input } from "@/components/ui/input";
 import { ServiceCategories } from "@/service/serviceCategories";
 import { useToast } from "@/contexts/ToastContext";
 import { useActionState } from "react";
+import { Category } from "@/libs/types";
 
 interface Props {
   children?: ReactNode;
-  category?: categorie;
+  category?: Category;
 }
 
 export default function CategoryDialog() {
-  ///const isEdit = !!category;
+  //  const isEdit = !!category;
   const [open, setOpen] = useState(false);
   const { showToast } = useToast();
   const [state, formAction] = useActionState(ServiceCategories, null);
@@ -52,7 +52,9 @@ export default function CategoryDialog() {
           <form id="category-form" className="space-y-4" action={formAction}>
             <div className="space-y-6">
               <DialogHeader className="flex items-center gap-2 text-bg(--color-text)  ">
-                <DialogTitle>Criar Nova Categoria</DialogTitle>
+                <DialogHeader>
+                  <DialogTitle></DialogTitle>
+                </DialogHeader>
               </DialogHeader>
 
               {/* Campo */}

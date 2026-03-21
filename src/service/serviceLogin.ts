@@ -6,6 +6,7 @@ import { GeralState } from "@/libs/typeState";
 
 export async function ServiceLogin(
   prevState: GeralState | null,
+
   formData: FormData,
 ) {
   try {
@@ -13,13 +14,13 @@ export async function ServiceLogin(
       email: formData.get("email") as string,
       password: formData.get("password") as string,
     };
-    await apiClient<AuthRespose>("/sessions", {
+    const response = await apiClient<AuthRespose>("/sessions", {
       method: "POST",
       body: JSON.stringify(payload),
     });
 
-    console.log(payload);
-    //  await setToken(login.token);
+    //    console.log(payload);
+    await setToken(response.token);
     return {
       success: true,
       message: "Login Realizado com sucesso",
