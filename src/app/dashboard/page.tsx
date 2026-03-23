@@ -1,4 +1,6 @@
-import RegisterForm from "@/components/forms/register/registerForm";
+"use client";
+
+import Profile from "@/components/profile/profile";
 import { authenticatedAdmin, getUserLog } from "@/libs/libsUtil";
 
 export default async function Dashboard() {
@@ -10,7 +12,7 @@ export default async function Dashboard() {
   return (
     <div>
       <h1>
-        <RegisterForm />
+        <Profile />
       </h1>
     </div>
   );

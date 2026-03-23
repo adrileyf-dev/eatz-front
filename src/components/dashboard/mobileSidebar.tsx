@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import styles from "./sidebar.module.css";
 import { usePathname } from "next/navigation";
-import { ServiceLogout } from "@/service/serviceLogout";
+import { ServiceLogout } from "@/service/Categorie/serviceLogout";
 import Link from "next/link";
 import {
   Sheet,
@@ -44,7 +44,7 @@ export function MobileSideBar() {
                 <Menu className="h-6 w-6"></Menu>
               </Button>
             </SheetTrigger>
-            <SheetContent className="w-72 border-b-blue-500" side="left">
+            <SheetContent className="w-72  border-b-blue-500" side="left">
               <SheetHeader className="border-b border-b-blue-500 p-6">
                 <SheetTitle className="text-1 font-bold text-blue-700"></SheetTitle>
               </SheetHeader>
@@ -79,7 +79,7 @@ export function MobileSideBar() {
             </SheetContent>
           </Sheet>
           <h1 className="text-lg font-bold">
-            <span className="text-lg font-bold"> EATZ</span>
+            <span className="text-lg font-bold  "> EATZ</span>
           </h1>
           <div className=" w-10"></div>
         </div>

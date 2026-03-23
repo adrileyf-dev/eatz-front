@@ -2,7 +2,7 @@
 import { LogOut, Package, ShoppingCart, Tags, User } from "lucide-react";
 import styles from "./sidebar.module.css";
 import { usePathname } from "next/navigation";
-import { ServiceLogout } from "@/service/serviceLogout";
+import { ServiceLogout } from "@/service/Categorie/serviceLogout";
 import Link from "next/link";
 
 import { menuItemApp } from "./../../lib/menuItem";
@@ -17,8 +17,10 @@ export default function Sidebar({ username }: SidebarProps) {
 
   return (
     <aside className={styles.sidebar}>
-      <div className={styles.logo}>EATZ</div>
-      <div className={styles.user}>
+      <div className="text-slate-300 text-2xl font-extrabold hidden lg:block text-center">
+        EATZ
+      </div>
+      <div className="text-center text-2x0 ">
         Usuário: <strong>{username}</strong>
       </div>
       <nav className={styles.menu}>
@@ -39,10 +41,10 @@ export default function Sidebar({ username }: SidebarProps) {
       </nav>
 
       <form className={styles.logoutForm} action={ServiceLogout}>
-        <button type="submit" className={styles.logoutButton}>
+        <Button type="submit" className={styles.logoutButton}>
           <LogOut size={18} />
           <span>Sair</span>
-        </button>
+        </Button>
       </form>
     </aside>
   );

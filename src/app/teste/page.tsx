@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ReactNode } from "react";
 
 // ============================
 // 🎨 NOVA PALETA (PROFISSIONAL)
@@ -111,8 +112,26 @@ function Profile() {
 export default function Sobre() {
   return (
     <main className="flex">
-      <Sidebar />
-      <Profile />
+      <Box title="Develper">
+        <p>Validacao de sistemas </p>
+      </Box>
     </main>
+  );
+}
+
+interface Props {
+  title: string;
+  children?: ReactNode;
+}
+
+function Box({ title, children }: Props) {
+  return (
+    <>
+      <div className="border p-4 rounded-lg">
+        <h2 className="font-bold">{title}</h2>
+
+        <div className="mt-2 border-t pt-2">{children}</div>
+      </div>
+    </>
   );
 }
