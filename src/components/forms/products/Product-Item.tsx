@@ -20,10 +20,10 @@ export default function ProductItem({ product }: Props) {
   return (
     <div
       className="
-      bg-[var(--color-bg-card)]
-      border border-[var(--color-border)]
+      bg-(--color-bg-card)
+      border border-var(--color-border)
       rounded-xl
-      p-5
+      p-1
       flex items-center justify-between
       hover:shadow-md
       transition-all

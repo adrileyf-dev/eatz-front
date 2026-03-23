@@ -22,6 +22,7 @@ export async function ServiceProducts(
     const active = formData.get("active") === "on";
 
     const isEdit = !!id;
+    console.log(isEdit);
 
     // ✅ VALIDAÇÃO BÁSICA
     if (!name) {

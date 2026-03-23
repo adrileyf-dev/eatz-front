@@ -30,12 +30,10 @@ export default function ProductForm({ product }: { product?: ProductsTypes }) {
         <Label>Nome</Label>
         <Input name="name" defaultValue={product?.name} />
       </div>
-
       <div>
         <Label>Preço</Label>
         <Input name="price" type="number" defaultValue={product?.price} />
       </div>
-
       <div>
         <Label>Categoria</Label>
         <select name="category_id" defaultValue={product?.category_id}>
@@ -47,12 +45,10 @@ export default function ProductForm({ product }: { product?: ProductsTypes }) {
           ))}
         </select>
       </div>
-
       <div>
         <Label>Descrição</Label>
         <textarea name="description" defaultValue={product?.description} />
       </div>
-
       <div className="flex gap-2">
         <input
           type="checkbox"
@@ -61,7 +57,6 @@ export default function ProductForm({ product }: { product?: ProductsTypes }) {
         />
         <Label>Ativo</Label>
       </div>
-
       {product && <input type="hidden" name="id" value={product.id} />}
     </div>
   );
