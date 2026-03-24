@@ -6,13 +6,26 @@ import { ProductsTypes } from "@/types/ProductTypes";
 import { useEffect, useState } from "react";
 import { apiClient } from "@/libs/api";
 import { getToken } from "@/libs/getCookies";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface Category {
   id: string;
   name: string;
 }
 
-export default function ProductForm({ product }: { product?: ProductsTypes }) {
+interface Props {
+  product?: ProductsTypes;
+}
+
+export default function ProductForm({ product }: Props) {
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
@@ -26,29 +39,60 @@ export default function ProductForm({ product }: { product?: ProductsTypes }) {
 
   return (
     <div className="space-y-4">
+      {/* NOME */}
       <div>
-        <Label>Nome</Label>
+        <Label className="mb-2">Nome</Label>
         <Input name="name" defaultValue={product?.name} />
       </div>
+
+      {/* PREÇO */}
       <div>
-        <Label>Preço</Label>
+        <Label className="mb-2">Preço</Label>
         <Input name="price" type="number" defaultValue={product?.price} />
       </div>
+
+      {/* CATEGORIA */}
       <div>
-        <Label>Categoria</Label>
-        <select name="category_id" defaultValue={product?.category_id}>
-          <option value="">Selecione</option>
-          {categories.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
+        <Label className="mb-2">Categoria</Label>
+
+        <Select name="category_id" defaultValue={product?.category_id}>
+          <SelectTrigger className="bg-[var(--color-bg-card)] border-[var(--color-border)] text-[var(--color-text)]">
+            <SelectValue placeholder="Selecione" />
+          </SelectTrigger>
+
+          <SelectContent className="bg-[var(--color-bg-card)] border-[var(--color-border)] text-[var(--color-text)]">
+            <SelectGroup>
+              {categories.map((c) => (
+                <SelectItem
+                  key={c.id}
+                  value={c.id}
+                  className="text-[var(--color-text)]"
+                >
+                  {c.name}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       </div>
+
+      {/* DESCRIÇÃO */}
       <div>
-        <Label>Descrição</Label>
-        <textarea name="description" defaultValue={product?.description} />
+        <Label className="mb-2">Descrição</Label>
+        <Textarea
+          name="description"
+          className="md"
+          defaultValue={product?.description}
+        />
       </div>
+
+      {/* 🔥 IMAGEM */}
+      <div>
+        <Label className="mb-2">Imagem</Label>
+        <Input className="flex gap-2" type="file" name="file" />
+      </div>
+
+      {/* STATUS */}
       <div className="flex gap-2">
         <input
           type="checkbox"
@@ -57,6 +101,8 @@ export default function ProductForm({ product }: { product?: ProductsTypes }) {
         />
         <Label>Ativo</Label>
       </div>
+
+      {/* ID (edit) */}
       {product && <input type="hidden" name="id" value={product.id} />}
     </div>
   );

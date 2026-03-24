@@ -51,7 +51,7 @@ export default function ProductDialog({ product, children }: Props) {
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>
+          <DialogTitle className="text-center">
             {isEdit ? "Editar Produto" : "Novo Produto"}
           </DialogTitle>
         </DialogHeader>

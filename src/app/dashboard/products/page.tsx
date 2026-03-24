@@ -24,7 +24,7 @@ export default async function Products() {
       </div>
 
       {/* lista */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-1">
         {prods.map((product) => (
           <ProductItem key={product.id} product={product} />
         ))}

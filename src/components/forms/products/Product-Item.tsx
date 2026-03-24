@@ -32,7 +32,7 @@ export default function ProductItem({ product }: Props) {
       {/* LEFT */}
       <div className="flex items-center gap-4">
         {/* IMAGE */}
-        <div className="w-12 h-12 rounded-lg bg-[var(--color-bg-muted)] flex items-center justify-center overflow-hidden">
+        <div className="w-12 h-12 rounded-lg bg-(--color-bg-muted) flex items-center justify-center overflow-hidden">
           {product.banner ? (
             <img
               src={product.banner}

@@ -4,7 +4,6 @@ import { apiClient } from "@/libs/api";
 import { getToken } from "@/libs/getCookies";
 import { GeralState } from "@/libs/typeState";
 import { revalidatePath } from "next/cache";
-import { ProductsTypes } from "@/types/ProductTypes";
 
 export async function ServiceProducts(
   prevState: GeralState | null,
@@ -13,61 +12,45 @@ export async function ServiceProducts(
   try {
     const token = await getToken();
 
-    // 🔥 PEGANDO DADOS DO FORM
     const id = formData.get("id") as string | null;
-    const name = formData.get("name") as string;
-    const price = Number(formData.get("price"));
-    const category_id = formData.get("category_id") as string;
-    const description = formData.get("description") as string;
-    const active = formData.get("active") === "on";
-
     const isEdit = !!id;
-    console.log(isEdit);
 
-    // ✅ VALIDAÇÃO BÁSICA
-    if (!name) {
-      return {
-        success: false,
-        message: "Nome é obrigatório",
-      };
+    const form = new FormData();
+
+    form.append("name", String(formData.get("name")));
+    form.append("price", String(formData.get("price")));
+    form.append("category_id", String(formData.get("category_id")));
+    form.append("description", String(formData.get("description") || ""));
+    form.append("active", String(formData.get("active") === "on"));
+
+    const file = formData.get("file") as File;
+    if (file && file.size > 0) {
+      form.append("file", file);
     }
 
-    // 🔥 PAYLOAD COMPLETO
-    const payLoad = {
-      name,
-      price,
-      category_id,
-      description,
-      active,
-    };
-
-    // 🔥 CREATE OU UPDATE
     if (isEdit) {
-      await apiClient<ProductsTypes>(`/products/${id}`, {
+      await apiClient(`/products/${id}`, {
         method: "PUT",
-        body: JSON.stringify(payLoad),
+        body: form,
         token,
       });
     } else {
-      await apiClient<ProductsTypes>("/products", {
+      await apiClient(`/products`, {
         method: "POST",
-        body: JSON.stringify(payLoad),
+        body: form,
         token,
       });
     }
 
-    // ✅ revalida lista
     revalidatePath("/dashboard/products");
 
     return {
       success: true,
       message: isEdit
         ? "Produto atualizado com sucesso"
-        : "Produto cadastrado com sucesso",
+        : "Produto criado com sucesso",
     };
   } catch (err: any) {
-    console.error("Product error:", err);
-
     const apiError = err?.response?.data;
 
     return {
@@ -77,8 +60,14 @@ export async function ServiceProducts(
     };
   }
 }
+
 export async function deleteProduct(id: string) {
   const token = await getToken();
-  await apiClient(`/products/${id}`, { method: "DELETE", token });
+
+  await apiClient(`/products/${id}`, {
+    method: "DELETE",
+    token,
+  });
+
   revalidatePath("/dashboard/products");
 }

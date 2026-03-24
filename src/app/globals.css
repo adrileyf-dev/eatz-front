@@ -328,6 +328,7 @@ body {
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --inset-shadow-md: inset 6px 5px -5px rgba(203, 26, 53, 0.096);
 }
 
 @layer base {

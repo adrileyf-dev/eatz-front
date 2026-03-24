@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { ReactNode } from "react";
 
@@ -127,11 +128,7 @@ interface Props {
 function Box({ title, children }: Props) {
   return (
     <>
-      <div className="border p-4 rounded-lg">
-        <h2 className="font-bold">{title}</h2>
-
-        <div className="mt-2 border-t pt-2">{children}</div>
-      </div>
+      <div className="inset-shadow-md"> asdasdas </div>
     </>
   );
 }

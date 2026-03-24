@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import styles from "./register.module.css";
 
 import { useToast } from "@/contexts/ToastContext";
-import { registerAction } from "@/service/serviceRegister";
+import { registerAction } from "@/service/Categorie/serviceRegister";
 
 type RegisterState = {
   success: boolean;
