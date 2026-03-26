@@ -24,10 +24,11 @@ interface Props {
 export default function ProductDialog({ product, children }: Props) {
   const [open, setOpen] = useState(false);
   const { showToast } = useToast();
+  const [isLoading, setLoading] = useState(false);
   const [state, formAction] = useActionState(ServiceProducts, null);
 
   const isEdit = !!product;
-
+  const idCategorie = product?.category_id;
   useEffect(() => {
     if (!state) return;
 

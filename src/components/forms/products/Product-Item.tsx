@@ -5,6 +5,7 @@ import { ProductsTypes } from "@/types/ProductTypes";
 import { formatCurrency } from "@/Utilits/format";
 import { Box, Tags, Pencil, Trash } from "lucide-react";
 import ProductDialog from "./product-dialog";
+import Image from "next/image";
 
 interface Props {
   product: ProductsTypes;
@@ -13,29 +14,30 @@ interface Props {
 export default function ProductItem({ product }: Props) {
   async function handleDelete() {
     if (!confirm("Deseja excluir esse produto?")) return;
-
     await deleteProduct(product.id);
   }
 
   return (
     <div
       className="
-      bg-(--color-bg-card)
-      border border-var(--color-border)
-      rounded-xl
-      p-1
-      flex items-center justify-between
-      hover:shadow-md
-      transition-all
-    "
+        bg-[var(--color-bg-card)]
+        border border-[var(--color-border)]
+        rounded-xl
+        p-1
+        flex items-center justify-between
+        hover:shadow-md
+        transition-all
+      "
     >
       {/* LEFT */}
       <div className="flex items-center gap-4">
         {/* IMAGE */}
-        <div className="w-12 h-12 rounded-lg bg-(--color-bg-muted) flex items-center justify-center overflow-hidden">
+        <div className="w-12 h-12 rounded-lg bg-[var(--color-bg-muted)] flex items-center justify-center overflow-hidden">
           {product.banner ? (
-            <img
+            <Image
               src={product.banner}
+              width={300}
+              height={300}
               alt={product.name}
               className="w-full h-full object-cover"
             />
@@ -46,7 +48,7 @@ export default function ProductItem({ product }: Props) {
 
         {/* INFO */}
         <div className="flex flex-col">
-          <p className="font-semibold text-[var(--color-text)]">
+          <p className="font-semibold text-[var(--color-text-main)]">
             {product.name}
           </p>
 
@@ -54,8 +56,6 @@ export default function ProductItem({ product }: Props) {
             <Tags className="w-3 h-3" />
             <span>{product.category?.name}</span>
           </div>
-
-          <span className="text-xs text-[var(--color-text-muted)]"></span>
         </div>
       </div>
 
@@ -68,14 +68,11 @@ export default function ProductItem({ product }: Props) {
           </span>
 
           <span
-            className={`
-              text-xs px-2 py-1 rounded-full
-              ${
-                product.active
-                  ? "bg-green-100 text-green-600"
-                  : "bg-red-100 text-red-500"
-              }
-            `}
+            className={`text-xs px-2 py-1 rounded-full ${
+              product.active
+                ? "bg-green-100 text-green-600"
+                : "bg-red-100 text-red-500"
+            }`}
           >
             {product.active ? "Ativo" : "Inativo"}
           </span>

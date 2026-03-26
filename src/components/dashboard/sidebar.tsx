@@ -18,7 +18,7 @@ export default function Sidebar({ username }: SidebarProps) {
   return (
     <aside className={styles.sidebar}>
       <div className="text-slate-300 text-2xl font-extrabold hidden lg:block text-center">
-        EATZ
+        ANA BURGER
       </div>
       <div className="text-center text-2x0 ">
         Usuário: <strong>{username}</strong>
