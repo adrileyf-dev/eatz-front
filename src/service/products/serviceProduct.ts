@@ -14,9 +14,7 @@ export async function ServiceProducts(
 
     const id = formData.get("id") as string | null;
     const isEdit = !!id;
-
     const form = new FormData();
-
     form.append("name", String(formData.get("name")));
     form.append("price", String(formData.get("price")));
     form.append("category_id", String(formData.get("category_id")));
@@ -27,6 +25,8 @@ export async function ServiceProducts(
     if (file && file.size > 0) {
       form.append("file", file);
     }
+
+    console.log(formData);
 
     if (isEdit) {
       await apiClient(`/products/${id}`, {

@@ -1,41 +1,48 @@
 {
+  // --- Interface & UX ---
   "window.zoomLevel": 1,
+  "workbench.activityBar.location": "top",
+  "workbench.editor.labelFormat": "short",
+  "workbench.startupEditor": "none",
   "breadcrumbs.enabled": false,
+  "explorer.compactFolders": false,
+  "editor.glyphMargin": false,
+  "editor.lineNumbers": "on",
+  "editor.minimap.enabled": false, // Ganho de foco e espaço lateral
 
+  // --- Tipografia & Editor ---
   "editor.fontSize": 14,
   "debug.console.fontSize": 14,
   "terminal.integrated.fontSize": 14,
-
-  "editor.glyphMargin": false,
-  "workbench.activityBar.location": "top",
-  "editor.lineNumbers": "on",
-  "files.eol": "\n", // Final de linha sempre será LF
-  "workbench.editor.labelFormat": "short",
   "editor.tabSize": 2,
-  "explorer.compactFolders": false,
+  "editor.renderLineHighlight": "all",
+  "editor.bracketPairColorization.enabled": true,
 
-  // 🛠 Formatação e Lint
+  // --- Arquivos & Formatação ---
+  "files.eol": "\n",
+  "files.insertFinalNewline": true, // Garante linha em branco no fim (padrão POSIX)
+  "files.trimTrailingWhitespace": true, // Remove espaços inúteis no fim das linhas
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
 
+  // --- Automação Profissional ---
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit" // Remove imports não usados e ordena automaticamente
   },
 
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  // --- Linguagens (Simplificado) ---
+  // Removi as entradas individuais pois o 'defaultFormatter' global já cobre elas.
+  // Mantive apenas se houver alguma exceção necessária.
   "[xml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[svg]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "DockerRun.DisableDockerrc": true
+
+  // --- Infra & Docker ---
+  "DockerRun.DisableDockerrc": true,
+  "docker.compose.visualize.enabled": true, // Ajuda a ver a topografia dos containers
+  "files.associations": {
+    "*.dockerfile": "dockerfile",
+    "docker-compose.yml": "yaml"
+  }
 }

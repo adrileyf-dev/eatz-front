@@ -1,12 +1,12 @@
 "use client";
 
+import { Upload, X } from "lucide-react";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
+
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ProductsTypes } from "@/types/ProductTypes";
-import React, { useEffect, useState } from "react";
-import { apiClient } from "@/libs/api";
-import { getToken } from "@/libs/getCookies";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -15,11 +15,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Category } from "@/libs/types";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Upload } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
 
+import { apiClient } from "@/libs/api";
+import { getToken } from "@/libs/getCookies";
+import { Category } from "@/libs/types";
+import { ProductsTypes } from "@/types/ProductTypes";
 import { resizeImage } from "@/Utilits/resizeImage";
 
 interface Props {
@@ -28,7 +29,10 @@ interface Props {
 
 export default function ProductForm({ product }: Props) {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [imagePreview, setPreview] = useState<string | null>(null);
+  // Inicia o preview com a imagem existente do produto, se houver
+  const [imagePreview, setPreview] = useState<string | null>(
+    product?.banner || null,
+  );
   const [imageFile, setFile] = useState<File | null>(null);
 
   useEffect(() => {
@@ -44,49 +48,65 @@ export default function ProductForm({ product }: Props) {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Redimensiona para 600x600
+    // Redimensiona para 600x600 antes de enviar
     const resized = await resizeImage(file, 600, 600);
-
-    // Salva para enviar ao servidor
     setFile(resized);
 
-    // Prévia
+    // Cria a prévia visual
     const previewUrl = URL.createObjectURL(resized);
     setPreview(previewUrl);
   }
 
+  const removeImage = () => {
+    setPreview(null);
+    setFile(null);
+    // Nota: Se estiver editando, você precisará tratar a remoção da imagem antiga no submit
+  };
+
   return (
-    <div className="space-y-4">
+    // Removido max-w e centralização para voltar ao tamanho anterior. Mantido o espaçamento vertical.
+    <div>
       {/* NOME */}
-      <div>
-        <Label className="mb-2">Nome</Label>
-        <Input name="name" defaultValue={product?.name} />
+      <div className="space-y-2">
+        <Label htmlFor="name">Nome do Produto</Label>
+        <Input
+          id="name"
+          name="name"
+          defaultValue={product?.name}
+          placeholder="Ex: Pizza de Calabresa"
+        />
       </div>
 
       {/* PREÇO */}
-      <div>
-        <Label className="mb-2">Preço</Label>
-        <Input name="price" type="text" defaultValue={product?.price} />
+      <div className="space-y-2">
+        <Label htmlFor="price">Preço</Label>
+        {/* Alterado para tipo texto para manter compatibilidade com o original, mas com inputmode numérico */}
+        <Input
+          id="price"
+          name="price"
+          type="text"
+          inputMode="decimal"
+          defaultValue={product?.price}
+          placeholder="0,00"
+        />
       </div>
 
       {/* CATEGORIA */}
-      <div>
-        <Label htmlFor="category" className="mb-2">
-          Categoria
-        </Label>
-
+      <div className="space-y-2">
+        <Label htmlFor="category">Categoria</Label>
         <Select name="category_id" defaultValue={product?.category_id}>
-          <SelectTrigger className="bg-[var(--color-bg-card)] border-[var(--color-border)] text-[var(--color-text)]">
-            <SelectValue placeholder="Selecione" />
+          {/* Adicionado bg-white e border-input para garantir fundo branco e borda padrão */}
+          <SelectTrigger className="w-full bg-white border border-input text-black">
+            <SelectValue placeholder="Selecione uma categoria" />
           </SelectTrigger>
-
-          <SelectContent className="bg-[var(--color-bg-card)] border-[var(--color-border)] text-[var(--color-text)]">
+          {/* Adicionado bg-white e border-input também no conteúdo do dropdown */}
+          <SelectContent className="bg-white border border-input text-black">
             <SelectGroup>
               {categories.map((category) => (
                 <SelectItem
                   key={category.id}
                   value={category.id}
-                  className="text-[var(--color-text)]"
+                  className="focus:bg-accent focus:text-accent-foreground" // Garante hover visível
                 >
                   {category.name}
                 </SelectItem>
@@ -97,68 +117,92 @@ export default function ProductForm({ product }: Props) {
       </div>
 
       {/* DESCRIÇÃO */}
-      <div>
-        <Label className="mb-2">Descrição</Label>
+      <div className="space-y-2">
+        <Label htmlFor="description">Descrição</Label>
         <Textarea
+          id="description"
           name="description"
-          className="md"
+          placeholder="Detalhes sobre o produto..."
+          className="resize-none h-24"
           defaultValue={product?.description}
         />
       </div>
 
       {/* 🔥 IMAGEM */}
-      <div className="relative w-full">
-        <Label className="mb-2">Imagem</Label>
+      <div className="space-y-2">
+        <Label>Imagem do Produto</Label>
+
         {imagePreview ? (
-          <div className="relative w-full h-48 border rounded-lg overflow-hidden">
+          // Container da imagem com hover para mostrar o botão de excluir
+          <div className="relative group w-full h-56 border rounded-xl overflow-hidden bg-muted">
             <Image
               src={imagePreview}
-              alt="preview da Imagen"
+              alt="Preview"
               fill
-              className=" object-cover z-10"
-            ></Image>
-            <Button
-              className="absolute  right-2 z-2
-              "
-              type="button"
-              variant={"destructive"}
-              onClick={() => {}}
-            >
-              {" "}
-              Exluir
-            </Button>
+              className="object-contain" // Garante que a imagem apareça inteira
+              id="file"
+            />
+
+            {/* Overlay que aparece no hover */}
+            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity  ">
+              <Button
+                type="button"
+                variant="destructive"
+                size="sm"
+                onClick={removeImage}
+                className="  text-taupe-50 font-bold  absolute right-2 top-2 z-20 "
+              >
+                <X className="w-4 h-4 text-taupe-50" /> Remover Imagem
+              </Button>
+            </div>
           </div>
         ) : (
-          <div className="border-2 border-dashed rounded-md p-8 flex flex-col justify-center">
-            {" "}
-            <Upload className="h-8 w-8 mx-auto text-gray-400 mb-2" />
-            <Label htmlFor="file" className="text-shadow-lg ">
-              Clique para Selecioar a imagem
-            </Label>
+          // Área de upload (Dropzone visual)
+          <label
+            htmlFor="file"
+            className="flex flex-col items-center justify-center w-full h-56 border-2
+            border-dashed border-muted-foreground/25 rounded-xl cursor-pointer hover:bg-accent/50
+             hover:border-primary/50 transition-all bg-white"
+          >
+            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+              <Upload className="w-10 h-10 text-muted-foreground mb-3" />
+              <p className="text-sm text-muted-foreground">
+                <span className="font-semibold text-primary">
+                  Clique para upload
+                </span>{" "}
+                ou arraste
+              </p>
+              <p className="text-xs text-muted-foreground/60 mt-1">
+                PNG, JPG ou JPEG (Máx. 600x600px)
+              </p>
+            </div>
             <Input
               id="file"
               name="file"
               type="file"
-              accept="Image/jpg,Image/jpeg,image/png"
+              accept="image/*"
               onChange={handleImageChange}
-              required
               className="hidden"
-            ></Input>
-          </div>
+            />
+          </label>
         )}
       </div>
 
-      {/* STATUS */}
-      <div className="flex gap-2 ">
+      {/* STATUS & ID */}
+      <div className="flex items-center space-x-2 bg-white p-3 rounded-lg w-fit  border-input">
         <input
           type="checkbox"
+          id="active"
           name="active"
+          className="w-4 h-4 accent-primary" // accent-primary usa a cor principal do tema para o checkbox
           defaultChecked={product?.active ?? true}
         />
-        <Label>Ativo</Label>
+        <Label htmlFor="active" className="cursor-pointer">
+          Produto Ativo para Vendas
+        </Label>
       </div>
 
-      {/* ID (edit) */}
+      {/* Campo oculto para o ID em caso de edição */}
       {product && <input type="hidden" name="id" value={product.id} />}
     </div>
   );

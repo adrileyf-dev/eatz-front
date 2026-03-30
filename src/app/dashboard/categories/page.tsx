@@ -25,7 +25,7 @@ export default async function Categories() {
       </div>
 
       {/* lista */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-1">
         {categories.map((category) => (
           <CategoryItem key={category.id} category={category} />
         ))}
