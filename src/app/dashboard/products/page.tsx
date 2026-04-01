@@ -4,11 +4,17 @@ import ProductDialog from "@/components/forms/products/product-dialog";
 import ProductItem from "@/components/forms/products/Product-Item";
 import { apiClient } from "@/libs/api";
 import { getToken } from "@/libs/getCookies";
+import { Category } from "@/libs/types";
 import { ProductsTypes } from "@/types/ProductTypes";
+
 export default async function Products() {
   const token = await getToken();
 
   const prods = await apiClient<ProductsTypes[]>("/products", {
+    token: token!,
+  });
+
+  const cat = await apiClient<Category[]>("/categories", {
     token: token!,
   });
 
@@ -23,8 +29,8 @@ export default async function Products() {
         <ProductDialog />
       </div>
 
-      {/* lista */}
-      <div className="flex flex-col gap-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {/* lista */}
         {prods.map((product) => (
           <ProductItem key={product.id} product={product} />
         ))}
