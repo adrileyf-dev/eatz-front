@@ -104,7 +104,7 @@ export default function ProductItem({ product }: ProductItemProps) {
 
             <button
               onClick={handleDelete}
-              className="p-2 rounded-md hover:bg-zinc-800 text-red-400 transition-colors"
+              className="p-2 rounded-md hover:bg-zinc-800 text-red-400 transition-colors "
             >
               <Trash className="w-4 h-4" />
             </button>
