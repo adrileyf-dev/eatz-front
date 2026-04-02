@@ -1,7 +1,7 @@
 {
   // --- Interface & UX ---
   "window.zoomLevel": 1,
-  "workbench.activityBar.location": "top",
+  "workbench.activityBar.location": "default",
   "workbench.editor.labelFormat": "short",
   "workbench.startupEditor": "none",
   "breadcrumbs.enabled": false,

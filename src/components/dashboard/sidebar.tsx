@@ -1,12 +1,12 @@
 "use client";
-import { LogOut, Package, ShoppingCart, Tags, User } from "lucide-react";
-import styles from "./sidebar.module.css";
-import { usePathname } from "next/navigation";
-import { ServiceLogout } from "@/service/Categorie/serviceLogout";
+import { ServiceLogout } from "@/service/categorie/serviceLogout";
+import { LogOut } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import styles from "./sidebar.module.css";
 
-import { menuItemApp } from "./../../lib/menuItem";
 import { Button } from "../ui/button";
+import { menuItemApp } from "./../../lib/menuItem";
 
 interface SidebarProps {
   username: string;
@@ -17,7 +17,7 @@ export default function Sidebar({ username }: SidebarProps) {
 
   return (
     <aside className={styles.sidebar}>
-      <div className="text-slate-300 text-2xl font-extrabold hidden lg:block text-center">
+      <div className="text-pink-500 text-2xl font-extrabold hidden lg:block text-center">
         ANA BURGER
       </div>
       <div className="text-center text-2x0 ">

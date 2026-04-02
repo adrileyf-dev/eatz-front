@@ -14,19 +14,32 @@ export async function ServiceProducts(
 
     const id = formData.get("id") as string | null;
     const isEdit = !!id;
+
     const form = new FormData();
+
     form.append("name", String(formData.get("name")));
-    form.append("price", String(formData.get("price")));
+
+    // Tratamento do preço
+    const priceRaw = String(formData.get("price"));
+    form.append("price", priceRaw.replace(",", "."));
+
     form.append("category_id", String(formData.get("category_id")));
     form.append("description", String(formData.get("description") || ""));
     form.append("active", String(formData.get("active") === "on"));
 
+    // O Insomnia também mostra que você envia um slug vazio,
+    // se a sua API reclamar de falta de slug, descomente a linha abaixo:
+    // form.append("slug", "");
+
+    // 🔥 O SEGREDO ESTAVA AQUI!
     const file = formData.get("file") as File;
     if (file && file.size > 0) {
-      form.append("file", file);
+      form.append("file", file); // Mantém como "file"
+      form.append("uploadImage", "true"); // <- ESTA É A PEÇA QUE FALTAVA!
+    } else {
+      // Se for edição e não tiver foto nova, talvez sua API exija false
+      form.append("uploadImage", "false");
     }
-
-    console.log(formData);
 
     if (isEdit) {
       await apiClient(`/products/${id}`, {
@@ -51,23 +64,9 @@ export async function ServiceProducts(
         : "Produto criado com sucesso",
     };
   } catch (err: any) {
-    const apiError = err?.response?.data;
-
     return {
       success: false,
-      message: apiError?.message || "Erro ao salvar produto",
-      errors: apiError?.errors || {},
+      message: err?.response?.data?.message || "Erro ao salvar produto",
     };
   }
-}
-
-export async function deleteProduct(id: string) {
-  const token = await getToken();
-
-  await apiClient(`/products/${id}`, {
-    method: "DELETE",
-    token,
-  });
-
-  revalidatePath("/dashboard/products");
 }

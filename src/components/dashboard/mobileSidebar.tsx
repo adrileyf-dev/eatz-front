@@ -1,27 +1,16 @@
 "use client";
 import {
-  LogOut,
-  Menu,
-  Package,
-  ShoppingCart,
-  Tags,
-  TvIcon,
-  User,
-} from "lucide-react";
-import styles from "./sidebar.module.css";
-import { usePathname } from "next/navigation";
-import { ServiceLogout } from "@/service/Categorie/serviceLogout";
-import Link from "next/link";
-import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { ServiceLogout } from "@/service/categorie/serviceLogout";
+import { LogOut, Menu } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import styles from "./sidebar.module.css";
 
 import { useState } from "react";
 import { Button } from "../ui/button";

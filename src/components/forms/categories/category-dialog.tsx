@@ -1,23 +1,22 @@
 "use client";
 import { ReactNode, useEffect, useState } from "react";
 
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { ServiceCategories } from "@/service/Categorie/serviceCategories";
+import { Label } from "@/components/ui/label";
 import { useToast } from "@/contexts/ToastContext";
-import { useActionState } from "react";
 import { Category } from "@/libs/types";
+import { ServiceCategories } from "@/service/categorie/serviceCategories";
+import { Plus } from "lucide-react";
+import { useActionState } from "react";
 
 interface Props {
   children?: ReactNode;

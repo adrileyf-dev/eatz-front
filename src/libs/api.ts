@@ -42,6 +42,5 @@ export async function apiClient<T>(
 
     throw new Error(error.error || "Erro de requisição");
   }
-
   return (await response.json()) as T;
 }

@@ -1,13 +1,13 @@
 "use client";
 
 import { Eye, EyeOff } from "lucide-react";
-import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useActionState, useEffect, useState } from "react";
 
 import styles from "./register.module.css";
 
 import { useToast } from "@/contexts/ToastContext";
-import { registerAction } from "@/service/Categorie/serviceRegister";
+import { registerAction } from "@/service/categorie/serviceRegister";
 
 type RegisterState = {
   success: boolean;
