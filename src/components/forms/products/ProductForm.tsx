@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
+import { CustomSelect } from "@/components/Systems/SelectComponent";
 import { apiClient } from "@/libs/api";
 import { getToken } from "@/libs/getCookies";
 import { Category } from "@/libs/types";
@@ -26,7 +27,7 @@ export default function ProductForm({ product }: Props) {
   );
   const [imageFile, setFile] = useState<File | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>(
-    product?.category_id || "",
+    product?.category.id || "",
   );
 
   useEffect(() => {
@@ -35,8 +36,8 @@ export default function ProductForm({ product }: Props) {
       const data = await apiClient<Category[]>("/categories", { token });
       setCategories(data);
       // Se estiver editando, garante que o valor seja setado quando as categorias carregarem
-      if (product?.category_id) {
-        setSelectedCategory(product.category_id);
+      if (product?.category.id) {
+        setSelectedCategory(product.category.id);
       }
     }
     load();
@@ -61,7 +62,6 @@ export default function ProductForm({ product }: Props) {
     e.target.files = dataTransfer.files;
   }
 
-  console.log("id categoria " + product?.category_id);
   const removeImage = () => {
     setPreview(null);
     setFile(null);
@@ -95,33 +95,15 @@ export default function ProductForm({ product }: Props) {
           placeholder="0,00"
         />
       </div>
-
-      {/* CATEGORIA */}
-      {/* CATEGORIA */}
-      <div className="space-y-2 mb-4">
-        <Label htmlFor="category">Categoria</Label>
-
-        <select
-          id="category"
-          name="category_id"
-          value={categoryId} // 🔥 Usa VALUE em vez de defaultValue
-          onChange={(e) => setCategoryId(e.target.value)} // 🔥 Atualiza o estado ao mudar
-          className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-white px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-black"
-        >
-          <option value="" disabled>
-            {categories.length === 0
-              ? "Carregando..."
-              : "Selecione uma categoria"}
-          </option>
-
-          {categories.map((category) => (
-            // Convertendo para String por segurança, caso o ID venha como número
-            <option key={category.id} value={String(category.id)}>
-              {category.name}
-            </option>
-          ))}
-        </select>
-      </div>
+      {/* SELECT REUTILIZÁVEL DE CATEGORIA */}
+      <CustomSelect
+        label="Categoria"
+        name="category_id"
+        value={selectedCategory}
+        onValueChange={setSelectedCategory}
+        options={categories}
+        placeholder="Selecione uma categoria"
+      />
 
       <div className="space-y-2 mb-4">
         <Label htmlFor="description">Descrição</Label>

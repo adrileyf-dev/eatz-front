@@ -70,3 +70,18 @@ export async function ServiceProducts(
     };
   }
 }
+export async function deleteProductAction(prodcutId: string) {
+  if (!prodcutId) {
+    return {
+      success: false,
+      error: "Erro ao salvar produto",
+    };
+    const token = await getToken();
+    await apiClient(`/products?=${prodcutId}`, {
+      method: "PUT",
+      token,
+    });
+    revalidatePath("/dashboard/products");
+    return { success: true, message: "Produto esta inativo" };
+  }
+}

@@ -14,7 +14,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/contexts/ToastContext";
 import { Category } from "@/libs/types";
-import { ServiceCategories } from "@/service/categorie/serviceCategories";
+
+import { ServiceCategories } from "@/service/Categorie/serviceCategories";
 import { Plus } from "lucide-react";
 import { useActionState } from "react";
 

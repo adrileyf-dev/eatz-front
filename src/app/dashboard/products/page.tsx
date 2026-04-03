@@ -4,7 +4,6 @@ import ProductDialog from "@/components/forms/products/product-dialog";
 import ProductItem from "@/components/forms/products/Product-Item";
 import { apiClient } from "@/libs/api";
 import { getToken } from "@/libs/getCookies";
-import { Category } from "@/libs/types";
 import { ProductsTypes } from "@/types/ProductTypes";
 import { PackageSearch } from "lucide-react";
 
@@ -12,10 +11,6 @@ export default async function Products() {
   const token = await getToken();
 
   const prods = await apiClient<ProductsTypes[]>("/products", {
-    token: token!,
-  });
-
-  const cat = await apiClient<Category[]>("/categories", {
     token: token!,
   });
 

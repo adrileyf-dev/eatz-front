@@ -2,11 +2,12 @@
 
 import { ProductsTypes } from "@/types/ProductTypes";
 import { formatCurrency } from "@/Utilits/format";
-import { Package, Pencil, Tags, Trash } from "lucide-react";
+import { Package, Pencil, Tags } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import ProductDialog from "./product-dialog";
 // Importe os componentes de Card se estiver usando Shadcn/UI
+import DeleteButtonComponent from "@/components/Systems/DeleteButtonComponent";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 
@@ -16,21 +17,6 @@ interface ProductItemProps {
 
 export default function ProductItem({ product }: ProductItemProps) {
   const router = useRouter();
-
-  async function handleDelete() {
-    const confirmed = confirm(
-      `Deseja realmente excluir o produto "${product.name}"?`,
-    );
-    if (!confirmed) return;
-
-    try {
-      //await deleteProduct(product.id);
-      router.refresh();
-    } catch (error) {
-      alert("Erro ao remover o produto.");
-      console.error(error);
-    }
-  }
 
   return (
     <div>
@@ -97,19 +83,14 @@ export default function ProductItem({ product }: ProductItemProps) {
             </div>
 
             {/* AÇÕES (Edit/Delete) */}
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
               <ProductDialog product={product}>
                 <button className="p-2 rounded-md hover:bg-zinc-800/20 text-blue-500 transition-colors">
                   <Pencil className="w-4 h-4" />
                 </button>
               </ProductDialog>
 
-              <button
-                onClick={handleDelete}
-                className="p-2 rounded-md hover:bg-zinc-800/20 text-red-500 transition-colors"
-              >
-                <Trash className="w-4 h-4" />
-              </button>
+              <DeleteButtonComponent productid={product.id} />
             </div>
           </div>
         </CardContent>
