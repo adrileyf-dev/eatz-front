@@ -1,6 +1,4 @@
-"use client";
-
-import { deleteProductAction } from "@/service/products/serviceProduct";
+import deleteProductAction from "@/service/products/DeleteProduct";
 import { Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";

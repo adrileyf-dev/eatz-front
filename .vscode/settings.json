@@ -44,5 +44,6 @@
   "files.associations": {
     "*.dockerfile": "dockerfile",
     "docker-compose.yml": "yaml"
-  }
+  },
+  "DockerRun.DisableAutoGenerateConfig": true
 }

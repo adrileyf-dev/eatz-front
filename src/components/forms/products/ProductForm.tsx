@@ -185,6 +185,7 @@ export default function ProductForm({ product }: Props) {
           className="w-4 h-4 accent-primary"
           defaultChecked={product?.active ?? true}
         />
+        
         <Label htmlFor="active" className="cursor-pointer">
           Produto Ativo para Vendas
         </Label>
