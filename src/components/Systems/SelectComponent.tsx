@@ -35,7 +35,7 @@ export function CustomSelect({
   const selectId = name || label.toLowerCase().replace(/\s+/g, "-");
 
   return (
-    <div className="space-y-2 mb-10">
+    <div className="space-y-2 mb-2">
       <Label htmlFor={selectId}>{label}</Label>
 
       <Select name={name} value={value} onValueChange={onValueChange}>

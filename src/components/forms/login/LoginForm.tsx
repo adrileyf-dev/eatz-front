@@ -4,7 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useActionState, useEffect, useState } from "react";
 import styles from "./login.module.css";
 
-import { ServiceLogin } from "@/service/categorie/serviceLogin";
+import { ServiceLogin } from "@/service/category/serviceLogin";
 import { useRouter } from "next/navigation";
 
 import { getUserLog } from "@/libs/libsUtil";

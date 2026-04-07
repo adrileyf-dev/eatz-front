@@ -1,5 +1,5 @@
 "use client";
-import { ServiceLogout } from "@/service/categorie/serviceLogout";
+import { ServiceLogout } from "@/service/category/serviceLogout";
 import { LogOut } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

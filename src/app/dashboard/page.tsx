@@ -1,7 +1,6 @@
-"use client";
+"use server";
 
-import Profile from "@/components/profile/profile";
-import { authenticatedAdmin, getUserLog } from "@/libs/libsUtil";
+import OrderPage from "../OrdersPage/page";
 
 export default async function Dashboard() {
   // se NÃO estiver logado → vai para login
@@ -9,11 +8,6 @@ export default async function Dashboard() {
     redirect("/login");
   }
 */
-  return (
-    <div>
-      <h1>
-        <Profile />
-      </h1>
-    </div>
-  );
+
+  return <OrderPage />;
 }

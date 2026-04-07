@@ -1,16 +1,22 @@
 "use server";
 
-import ProductDialog from "@/components/forms/products/product-dialog";
-import ProductItem from "@/components/forms/products/Product-Item";
+import OrderItem from "@/components/forms/orders/Orders.item";
 import { apiClient } from "@/libs/api";
 import { getToken } from "@/libs/getCookies";
-import { ProductsTypes } from "@/types/ProductTypes";
+import { Order } from "@/types/OrderType";
 import { PackageSearch } from "lucide-react";
 
-export default async function Products() {
-  const token = await getToken();
+export default async function OrderPage() {
+  // se NÃO estiver logado → vai para login
+  /* if (!user) {
+    redirect("/login");
+  }
+*/
 
-  const prods = await apiClient<ProductsTypes[]>("/products", {
+  const token = await getToken();
+  const orders = await apiClient<Order[]>("/orders", {
+    method: "GET",
+    cache: "no-store",
     token: token!,
   });
 
@@ -19,17 +25,15 @@ export default async function Products() {
       {/* header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <h1 className="text-2xl sm:text-3xl  text-(--color-text)font-bold">
-          Produtos
+          Pedidos
         </h1>
         <div className="text-sm sm:text-base mt-1"></div>
-        <ProductDialog />
       </div>
 
-      {prods && prods.length > 0 ? (
+      {orders && orders.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-          {/* lista */}
-          {prods.map((product) => (
-            <ProductItem key={product.id} product={product} />
+          {orders.map((order) => (
+            <OrderItem key={order.id} order={order} />
           ))}
         </div>
       ) : (
@@ -38,11 +42,10 @@ export default async function Products() {
             <PackageSearch className="w-8 h-8 text-primary" />
           </div>
           <h3 className="text-xl font-semibold text-foreground mb-1">
-            Nenhum produto encontrado
+            Nenhum Pedido encontrado
           </h3>
           <p className="text-sm text-muted-foreground max-w-sm text-center">
-            Você ainda não possui produtos cadastrados. Clique no botão de
-            adicionar para começar.
+            Você ainda não possui Pedidos
           </p>
         </div>
       )}

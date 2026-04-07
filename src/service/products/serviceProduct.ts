@@ -8,7 +8,6 @@ import { revalidatePath } from "next/cache";
 export async function ServiceProducts(
   prevState: GeralState | null,
   formData: FormData,
-  product_id: string,
 ): Promise<GeralState> {
   try {
     const token = await getToken();

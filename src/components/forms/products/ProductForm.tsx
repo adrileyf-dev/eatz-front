@@ -74,7 +74,7 @@ export default function ProductForm({ product }: Props) {
   return (
     <div>
       {/* NOME, PREÇO, CATEGORIA E DESCRIÇÃO (MANTIDOS IGUAIS) */}
-      <div className="space-y-2 mb-4">
+      <div className="space-y-2 mb-2">
         <Label htmlFor="name">Nome do Produto</Label>
         <Input
           id="name"
@@ -84,7 +84,7 @@ export default function ProductForm({ product }: Props) {
         />
       </div>
 
-      <div className="space-y-2 mb-4">
+      <div className="space-y-2 mb-2">
         <Label htmlFor="price">Preço</Label>
         <Input
           id="price"
@@ -105,7 +105,7 @@ export default function ProductForm({ product }: Props) {
         placeholder="Selecione uma categoria"
       />
 
-      <div className="space-y-2 mb-4">
+      <div className="space-y-2 mb-2">
         <Label htmlFor="description">Descrição</Label>
         <Textarea
           id="description"
@@ -158,10 +158,12 @@ export default function ProductForm({ product }: Props) {
         ) : (
           <label
             htmlFor="file"
-            className="flex flex-col items-center justify-center w-full h-56 border-2 border-dashed border-muted-foreground/25 rounded-xl cursor-pointer hover:bg-accent/50 hover:border-primary/50 transition-all bg-white"
+            className="flex flex-col items-center justify-center w-full h-48
+            border-2 border-dashed border-muted-foreground/25
+            rounded-xl cursor-pointer hover:bg-accent/50 hover:border-primary/50 transition-all bg-white"
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
-              <Upload className="w-10 h-10 text-muted-foreground mb-3" />
+              <Upload className="w-10 h-10 text-muted-foreground mb-2" />
               <p className="text-sm text-muted-foreground">
                 <span className="font-semibold text-primary">
                   Clique para upload
@@ -177,7 +179,7 @@ export default function ProductForm({ product }: Props) {
       </div>
 
       {/* STATUS & ID */}
-      <div className="flex items-center space-x-2 bg-white p-3 rounded-lg w-fit border border-input mb-4">
+      <div className="flex items-center space-x-2 bg-white p-3 rounded-lg w-fit mb-2">
         <input
           type="checkbox"
           id="active"
@@ -185,10 +187,8 @@ export default function ProductForm({ product }: Props) {
           className="w-4 h-4 accent-primary"
           defaultChecked={product?.active ?? true}
         />
-        
-        <Label htmlFor="active" className="cursor-pointer">
-          Produto Ativo para Vendas
-        </Label>
+
+        <Label className="cursor-pointer">Produto Ativo para Vendas</Label>
       </div>
 
       {product && <input type="hidden" name="id" value={product.id} />}

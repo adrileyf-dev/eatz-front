@@ -7,7 +7,7 @@ import { useActionState, useEffect, useState } from "react";
 import styles from "./register.module.css";
 
 import { useToast } from "@/contexts/ToastContext";
-import { registerAction } from "@/service/categorie/serviceRegister";
+import { registerAction } from "@/service/category/serviceRegister";
 
 type RegisterState = {
   success: boolean;

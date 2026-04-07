@@ -13,4 +13,5 @@ export type ProductsTypes = {
   category: Category;
   price: number;
   banner?: string;
+  observacao: string;
 };
