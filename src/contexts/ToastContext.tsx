@@ -1,7 +1,7 @@
 "use client";
 
 import Toast from "@/components/Toast/Toast";
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 
 interface ToastState {
   message: string;
@@ -17,9 +17,18 @@ const ToastContext = createContext<ToastContextProps | null>(null);
 export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toast, setToast] = useState<ToastState | null>(null);
 
-  function showToast(message: string, type: "success" | "error" = "success") {
-    setToast({ message, type });
-  }
+  // useCallback evita que a função seja recriada desnecessariamente
+  const showToast = useCallback(
+    (message: string, type: "success" | "error" = "success") => {
+      setToast({ message, type });
+
+      // Auto-fechamento após 3 segundos
+      setTimeout(() => {
+        setToast(null);
+      }, 3000);
+    },
+    [],
+  );
 
   function closeToast() {
     setToast(null);
@@ -28,7 +37,6 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
-
       {toast && (
         <Toast message={toast.message} type={toast.type} onClose={closeToast} />
       )}
@@ -38,10 +46,8 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
 
 export function useToast() {
   const context = useContext(ToastContext);
-
   if (!context) {
     throw new Error("useToast must be used inside ToastProvider");
   }
-
   return context;
 }

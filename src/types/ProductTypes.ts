@@ -6,7 +6,7 @@ export type ProductsTypes = {
   slug: string;
   description?: string;
   active: boolean;
-  //items: Item[];
+
   createdAt: Date;
   updatedAt: Date;
   category_id: string;

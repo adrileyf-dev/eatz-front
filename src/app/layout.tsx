@@ -1,8 +1,10 @@
-import "./globals.css";
-import type { Metadata } from "next";
+// Ajuste o caminho se necessário
+import { SocketManager } from "@/components/Socket.io/SocketManager";
 import { ToastProvider } from "@/contexts/ToastContext";
-import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
+import type { Metadata } from "next";
+import { Geist } from "next/font/google";
+import "./globals.css";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -19,7 +21,12 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={cn("font-sans", geist.variable)}>
       <body className="bg-[--color-bg] text-[--color-text]">
-        <ToastProvider>{children}</ToastProvider>
+        <ToastProvider>
+          {/* O gerenciador de eventos fica aqui para ouvir o Kafka em todo o sistema */}
+          <SocketManager />
+
+          {children}
+        </ToastProvider>
       </body>
     </html>
   );

@@ -1,5 +1,4 @@
-"use server";
-
+// app/orders/page.tsx (ou seu caminho de página)
 import OrderItem from "@/components/forms/orders/Orders.item";
 import { apiClient } from "@/libs/api";
 import { getToken } from "@/libs/getCookies";
@@ -7,13 +6,9 @@ import { Order } from "@/types/OrderType";
 import { PackageSearch } from "lucide-react";
 
 export default async function OrderPage() {
-  // se NÃO estiver logado → vai para login
-  /* if (!user) {
-    redirect("/login");
-  }
-*/
-
   const token = await getToken();
+
+  // O cache: "no-store" garante que o router.refresh() pegue dados novos
   const orders = await apiClient<Order[]>("/orders", {
     method: "GET",
     cache: "no-store",
@@ -22,12 +17,10 @@ export default async function OrderPage() {
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      {/* header */}
+      {/* O ouvinte do Socket fica aqui, apenas 1 conexão para toda a página */}
+
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <h1 className="text-2xl sm:text-3xl  text-(--color-text)font-bold">
-          Pedidos
-        </h1>
-        <div className="text-sm sm:text-base mt-1"></div>
+        <h1 className="text-2xl sm:text-3xl font-bold">Pedidos</h1>
       </div>
 
       {orders && orders.length > 0 ? (
@@ -37,7 +30,10 @@ export default async function OrderPage() {
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center w-full py-24 px-4 border-2 border-dashed border-muted-foreground/25 rounded-xl bg-white/50">
+        <div
+          className="flex flex-col items-center justify-center w-full py-24 px-4 border-2
+         border-dashed border-muted-foreground/25 rounded-xl bg-white/50"
+        >
           <div className="flex items-center justify-center w-16 h-16 rounded-full bg-accent mb-4">
             <PackageSearch className="w-8 h-8 text-primary" />
           </div>
