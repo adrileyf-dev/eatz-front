@@ -9,11 +9,12 @@ export default async function OrderPage() {
   const token = await getToken();
 
   // O cache: "no-store" garante que o router.refresh() pegue dados novos
-  const orders = await apiClient<Order[]>("/orders", {
+  const orders = await apiClient<Order[]>("/orders?status=false", {
     method: "GET",
     cache: "no-store",
     token: token!,
   });
+  const activeOrders = orders?.filter((order) => order.status === false) || [];
 
   return (
     <div className="space-y-4 sm:space-y-6">
@@ -23,9 +24,9 @@ export default async function OrderPage() {
         <h1 className="text-2xl sm:text-3xl font-bold">Pedidos</h1>
       </div>
 
-      {orders && orders.length > 0 ? (
+      {activeOrders && activeOrders.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-          {orders.map((order) => (
+          {activeOrders.map((order) => (
             <OrderItem key={order.id} order={order} />
           ))}
         </div>

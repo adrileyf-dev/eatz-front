@@ -1,39 +1,47 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { ServiceFinishOrder } from "@/service/orders/servicesOrders";
 import { Order } from "@/types/OrderType";
 import { formatCurrency, formatDateTime } from "@/Utilits/format";
+import { useState } from "react";
+import { OrderModalDetails } from "./OrderModalDetails";
+import OrderRodape from "./OrdersRodape";
+
 interface OrderItemProps {
   order: Order;
 }
-
 export default function OrderListItems({ order }: OrderItemProps) {
-  // 1. Verificação de segurança (Impede que o código abaixo rode se não houver order)
   if (!order) {
     return <div className="p-4 text-center text-black">Carregando...</div>;
   }
-
-  // 2. Cálculo do total (Convertendo explicitamente para número)
+  const [modalOpen, setModalOpen] = useState(false);
   const totalSomaPedido =
-    order.item?.reduce((acc, curr) => {
-      const valor = Number(curr.totalprice) || 0;
-      return acc + valor;
-    }, 0) || 0;
-
-  // 2. Cálculo do total (Convertendo explicitamente para número)
+    order.item?.reduce(
+      (acc, curr) => acc + (Number(curr.totalprice) || 0),
+      0,
+    ) || 0;
   const totalItems =
-    order.item?.reduce((acc, curr) => {
-      const valor = Number(curr.amount) || 0;
-      return acc + valor;
-    }, 0) || 0;
+    order.item?.reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0) || 0;
+  const handleFinishOrder = async () => {
+    try {
+      const result = await ServiceFinishOrder(order.id);
+    } catch (error) {
+      console.error("Erro ao finalizar pedido:", error);
+    }
+  };
 
-  // Array vazio garante que só rode uma vez
-
-  // 3. Renderização Principal
   return (
-    <div className="w-full">
-      <Card className="bg-app-card border-app-border transition-shadow hover:shadow-md text-black overflow-hidden flex flex-col h-full group">
-        <div className="relative w-full overflow-hidden text-black p-4 flex flex-col">
+    // Adicionei h-full aqui para que o container externo também preencha a altura da grid
+    <div className="w-full h-full">
+      <Card
+        className="bg-app-card border-app-border transition-shadow hover:shadow-md
+        text-black overflow-hidden flex flex-col h-full group"
+      >
+        {/* O segredo está no flex-1 aqui: ele vai crescer e ocupar todo o espaço disponível,
+            empurrando o OrderRodape para o final do card */}
+        <div className="relative w-full overflow-hidden text-black p-4 flex flex-col flex-1">
           <div className="text-sm mb-3">
             <span className="font-bold">Data: </span>
             <span>{formatDateTime(order.createdAt)}</span>
@@ -63,53 +71,65 @@ export default function OrderListItems({ order }: OrderItemProps) {
             </p>
           </div>
 
-          <div className="mt-4 overflow-y-auto max-h-40 custom-scrollbar">
+          <div className="mt-4">
             <p className="text-[10px] font-bold text-gray-400 uppercase mb-2 border-b border-gray-100 pb-1">
               Itens do Pedido
             </p>
 
-            {Array.isArray(order.item) && order.item.length > 0 ? (
-              <ul className="space-y-2">
-                {order.item.map((item) => (
-                  <li
-                    key={item.id}
-                    className="text-xs flex flex-col border-b border-gray-50 last:border-0 pb-1"
-                  >
-                    <div className="flex justify-between items-center">
-                      <span className="font-medium">
-                        {item.amount}x {item.product?.name || "Produto"}
-                      </span>
-                      <span className="font-mono text-gray-600">
-                        {formatCurrency(Number(item.totalprice))}
-                      </span>
-                    </div>
-                    {item.observacao && (
-                      <span className="text-[10px] text-orange-500 italic">
-                        Obs: {item.observacao}
-                      </span>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-[10px] italic text-gray-400">
-                Nenhum item registrado.
-              </p>
-            )}
+            {/* Ajustei a altura mínima para evitar que o card "pule" visualmente */}
+            <div className="overflow-y-auto max-h-40 min-h-[60px] custom-scrollbar">
+              {Array.isArray(order.item) && order.item.length > 0 ? (
+                <ul className="space-y-2">
+                  {order.item.slice(0, 3).map((item) => (
+                    <li key={item.id} className="text-xs sm:text-sm">
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs sm:text-sm font-bold uppercase">
+                          {item.amount}x {item.product?.name || "Produto"}
+                        </span>
+                        <span className="font-mono text-gray-600">
+                          {formatCurrency(Number(item.totalprice))}
+                        </span>
+                      </div>
+                      {item.observacao && (
+                        <span className="text-[10px] text-orange-500 italic block">
+                          Obs: {item.observacao}
+                        </span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-[10px] italic text-gray-400">
+                  Nenhum item registrado.
+                </p>
+              )}
+            </div>
           </div>
         </div>
 
-        <div className="px-4 py-3 bg-black/5 mt-auto flex justify-between items-center border-t border-gray-100">
-          <div className="flex flex-col">
-            <span className="text-[10px] font-bold uppercase text-gray-500">
-              Total ({totalItems} itens)
-            </span>
-            <span className="font-bold text-base text-green-700">
-              {formatCurrency(totalSomaPedido)}
-            </span>
-          </div>
-        </div>
+        {/* O rodapé agora ficará sempre colado na parte inferior devido ao flex-1 acima */}
+        <OrderRodape
+          totalItems={totalItems}
+          totalSomaPedido={totalSomaPedido}
+          onOpenModal={() => setModalOpen(true)}
+        />
+        <Button
+          onClick={handleFinishOrder}
+          size="sm"
+          variant="outline"
+          className="flex w-full items-center gap-2 border-slate-200  bg-red-500/50 text-slate-700
+           hover:bg-white xl:w-auto active:scale-95
+           transition-all shadow-sm"
+        >
+          Finalizar Pedidos{" "}
+        </Button>
       </Card>
+
+      <OrderModalDetails
+        order={order}
+        isOpen={modalOpen}
+        onClose={setModalOpen}
+      />
     </div>
   );
 }

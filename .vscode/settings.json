@@ -4,7 +4,7 @@
   "workbench.activityBar.location": "default",
   "workbench.editor.labelFormat": "short",
   "workbench.startupEditor": "none",
-  "breadcrumbs.enabled": false,
+  "breadcrumbs.enabled": true,
   "explorer.compactFolders": false,
   "editor.glyphMargin": false,
   "editor.lineNumbers": "on",
