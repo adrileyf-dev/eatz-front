@@ -9,7 +9,7 @@ export async function ServiceLogin(
   prevState: GeralState | null,
 
   formData: FormData,
-) {
+): Promise<GeralState> {
   try {
     const payload = {
       email: formData.get("email") as string,
@@ -20,7 +20,6 @@ export async function ServiceLogin(
       body: JSON.stringify(payload),
     });
 
-    //    console.log(payload);
     await setToken(response.token);
     return {
       success: true,
@@ -35,5 +34,10 @@ export async function ServiceLogin(
         error: err.message,
       };
     }
+
+    return {
+      success: false,
+      error: "Ocorreu um erro inesperado ao realizar o login.",
+    };
   }
 }

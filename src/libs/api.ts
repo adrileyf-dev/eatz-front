@@ -4,8 +4,6 @@ export function getApiUrl() {
   return API_URL;
 }
 
-console.log(API_URL);
-
 interface FetchOptions extends RequestInit {
   token?: string;
   cache?: "force-cache" | "no-store";
