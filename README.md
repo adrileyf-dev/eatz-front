@@ -301,6 +301,106 @@ Usado para:
 
 ---
 
+# 🐳 Docker - Front-end
+
+## Executar Localmente
+
+### Pré-requisitos
+
+- Docker e Docker Compose instalados
+- Porta 3000 disponível
+
+### Comandos
+
+```bash
+# Construir e executar
+docker compose up --build
+
+# Executar em background
+docker compose up -d --build
+
+# Parar serviços
+docker compose down
+
+# Ver logs
+docker compose logs -f eatz-front
+
+# Verificar status
+docker compose ps
+```
+
+## 📦 Publicar Container
+
+### Construir imagem
+
+```bash
+docker build -t eatz-front:latest .
+```
+
+### Publicar no Docker Hub
+
+```bash
+# Login no Docker Hub
+docker login
+
+# Tag da imagem
+docker tag eatz-front:latest seu-usuario/eatz-front:latest
+
+# Push da imagem
+docker push seu-usuario/eatz-front:latest
+```
+
+### Usar imagem publicada
+
+```yaml
+# docker-compose.yml
+services:
+  eatz-front:
+    image: seu-usuario/eatz-front:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - .env
+    restart: unless-stopped
+```
+
+## 🔧 Desenvolvimento (sem Docker)
+
+### Instalar dependências
+
+```bash
+npm install
+```
+
+### Executar em modo desenvolvimento
+
+```bash
+npm run dev
+```
+
+### Build de produção
+
+```bash
+npm run build
+npm start
+```
+
+## 📋 Arquivos Docker
+
+- `Dockerfile` - Multi-stage build com Node.js 20 Alpine
+- `.dockerignore` - Exclui arquivos desnecessários do build
+- `docker-compose.yml` - Orquestração do serviço front-end
+
+## 🏗️ Dockerfile
+
+- **Builder stage**: Instala dependências e constrói a aplicação
+- **Runner stage**: Imagem otimizada apenas com arquivos de produção
+- Usa Next.js standalone output para melhor performance
+
+---
+
 # 📄 Licença
 
 MIT

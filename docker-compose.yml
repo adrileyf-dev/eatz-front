@@ -1,0 +1,20 @@
+services:
+  eatz-front:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: eatz-front:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - eatz_default
+
+networks:
+  eatz_default:
+    external: true
+    name: eatz_default

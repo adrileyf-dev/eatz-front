@@ -6,8 +6,7 @@ import { setToken } from "@/libs/getCookies";
 import { GeralState } from "@/libs/typeState";
 
 export async function ServiceLogin(
-  prevState: GeralState | null,
-
+  prevState: GeralState | null | undefined,
   formData: FormData,
 ) {
   try {

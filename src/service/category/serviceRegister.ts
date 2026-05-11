@@ -1,13 +1,18 @@
 "use server";
 
 import { apiClient } from "@/libs/api";
-import { GeralState } from "@/libs/typeState";
 import { User } from "@/libs/types";
 
+type RegisterState = {
+  success: boolean;
+  message?: string;
+  error: string | null;
+};
+
 export async function registerAction(
-  prevState: GeralState | null,
+  prevState: RegisterState | null | undefined,
   formData: FormData,
-): Promise<GeralState> {
+): Promise<RegisterState> {
   try {
     const payload = {
       name: formData.get("name") as string,
@@ -24,6 +29,7 @@ export async function registerAction(
     return {
       success: true,
       message: "Registro realizado com sucesso",
+      error: null,
     };
   } catch (err) {
     console.error("Register error:", err);

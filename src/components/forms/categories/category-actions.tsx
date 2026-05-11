@@ -1,6 +1,5 @@
 "use client";
 
-import { categorie } from "@/libs/types";
 import { Button } from "@/components/ui/button";
 
 import {
@@ -10,11 +9,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { MoreVertical, Pencil, Trash } from "lucide-react";
-import CategoryDialog from "./category-dialog";
+import type { Category } from "@/libs/types";
+import { MoreVertical, Trash } from "lucide-react";
 
 interface Props {
-  category: categorie;
+  category: Category;
 }
 
 export default function CategoryActions({ category }: Props) {
