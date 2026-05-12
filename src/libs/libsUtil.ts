@@ -13,6 +13,7 @@ export async function getUserLog(): Promise<User | null> {
     const user = await apiClient<User>("/me", { token: token });
     return user;
   } catch (error) {
+    console.error("Erro ao buscar log do usuário:", error);
     return null;
   }
 }

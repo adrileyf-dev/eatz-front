@@ -7,13 +7,11 @@ import styles from "./login.module.css";
 import { ServiceLogin } from "@/service/category/serviceLogin";
 import { useRouter } from "next/navigation";
 
-import { getUserLog } from "@/libs/libsUtil";
-const user = await getUserLog();
-
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [state, formAction, isPending] = useActionState(ServiceLogin, null);
   const router = useRouter();
+
   //const { showToast } = useToast();
 
   // controla sucesso / erro

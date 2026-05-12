@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "eatz-front",
   "version": "0.1.0",
@@ -37,3 +38,44 @@
     "typescript": "^5.9.3"
   }
 }
+=======
+{
+  "name": "eatz-front",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.2.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.577.0",
+    "next": "^16.1.6",
+    "radix-ui": "^1.4.3",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-markdown": "^10.1.0",
+    "shadcn": "^4.0.6",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3",
+    "sonner": "^2.0.7",
+    "tailwind-merge": "^3.5.0",
+    "tw-animate-css": "^1.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/socket.io": "^3.0.1",
+    "autoprefixer": "^10.4.27",
+    "babel-plugin-react-compiler": "1.0.0",
+    "postcss": "^8.5.8",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "tailwindcss": "^4.2.1",
+    "typescript": "^5"
+  }
+}
+>>>>>>> 61929167da57b892010f230a0aa83ad9b3d4ad4a
