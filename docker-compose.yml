@@ -1,20 +1,30 @@
+name: "eatz-web"
+
 services:
   eatz-front:
+    container_name: eatz-web
+
     build:
       context: .
       dockerfile: Dockerfile
+
     image: eatz-front:latest
+
     ports:
       - "3000:3000"
+
     environment:
-      - NODE_ENV=production
+      NODE_ENV: production
+
     env_file:
       - .env
+
     restart: unless-stopped
+
     networks:
-      - eatz_default
+      - eatz-network
 
 networks:
-  eatz_default:
+  eatz-network:
     external: true
     name: eatz_default
