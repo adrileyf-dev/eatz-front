@@ -1,5 +1,6 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import CategoryDialog from "@/components/forms/categories/category-dialog";
 import CategoryItem from "@/components/forms/categories/category-item";
 import { apiClient } from "@/libs/api";
@@ -9,10 +10,13 @@ import { Category } from "@/libs/types";
 export default async function Categories() {
   const token = await getToken();
 
-  const categories = await apiClient<Category[]>("/categories", {
-    token: token!,
-  });
+  if (!token) {
+    redirect("/login");
+  }
 
+  const categories = await apiClient<Category[]>("/categories", {
+    token,
+  });
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* header */}

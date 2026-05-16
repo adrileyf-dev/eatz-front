@@ -16,6 +16,11 @@ export async function apiClient<T>(
   endpoint: string,
   options: FetchOptions = {},
 ): Promise<T> {
+  if (!API_URL && typeof window !== "undefined") {
+    console.error("❌ ERRO: NEXT_PUBLIC_API_URL não está definida no cliente!");
+    throw new Error("Configuração de API ausente");
+  }
+
   const { token, ...fetchOptions } = options;
   const headers: Record<string, string> = {
     ...(fetchOptions.headers as Record<string, string>),

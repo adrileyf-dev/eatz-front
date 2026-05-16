@@ -27,4 +27,4 @@ services:
 networks:
   eatz-network:
     external: true
-    name: eatz_default
+    name: eatz-network

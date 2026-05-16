@@ -24,8 +24,8 @@ interface Props {
   category?: Category;
 }
 
-export default function CategoryDialog() {
-  //  const isEdit = !!category;
+export default function CategoryDialog({ category, children }: Props) {
+  const isEdit = !!category;
   const [open, setOpen] = useState(false);
   const { showToast } = useToast();
   const [state, formAction] = useActionState(ServiceCategories, null);
@@ -34,18 +34,24 @@ export default function CategoryDialog() {
     if (!state) return;
     if (state.success) {
       showToast(state.message!, "success");
+      setOpen(false);
     } else {
       showToast(state.message!, "error");
     }
-  }, [state]);
+  }, [state, showToast]);
+
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button className="flex items-center bg-primary gap-2 ">
-            <Plus className="h-4 w-4" />
-            Nova Categorias
-          </Button>
+          {children ? (
+            children
+          ) : (
+            <Button className="flex items-center bg-primary gap-2 ">
+              <Plus className="h-4 w-4" />
+              Nova Categorias
+            </Button>
+          )}
         </DialogTrigger>
 
         <DialogContent className="w-full max-w-xl p-8 rounded-2xl">
@@ -53,15 +59,23 @@ export default function CategoryDialog() {
             <div className="space-y-6">
               <DialogHeader className="flex items-center gap-2 text-bg(--color-text)  ">
                 <DialogHeader>
-                  <DialogTitle></DialogTitle>
+                  <DialogTitle>
+                    {isEdit ? "Editar Categoria" : "Nova Categoria"}
+                  </DialogTitle>
                 </DialogHeader>
               </DialogHeader>
 
               {/* Campo */}
               <div className="space-y-2">
                 <Label className="text-sm font-medium">Categoria</Label>
-                <Input name="name" placeholder="Digite o Nome da Categoria." />
+                <Input
+                  name="name"
+                  defaultValue={category?.name}
+                  placeholder="Digite o Nome da Categoria."
+                />
               </div>
+
+              {isEdit && <input type="hidden" name="id" value={category!.id} />}
 
               {/* Botões */}
               <div className="flex justify-end gap-3 pt-4">
@@ -74,7 +88,7 @@ export default function CategoryDialog() {
                   type="submit"
                   className="bg-primary text-primary-foreground"
                 >
-                  Gravar
+                  {isEdit ? "Atualizar" : "Gravar"}
                 </Button>
               </div>
             </div>
@@ -84,3 +98,4 @@ export default function CategoryDialog() {
     </>
   );
 }
+

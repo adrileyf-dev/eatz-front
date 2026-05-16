@@ -1,6 +1,7 @@
 "use client";
 import { Category } from "@/libs/types";
 import { Pencil, Tags, Trash } from "lucide-react";
+import CategoryDialog from "./category-dialog";
 
 interface Props {
   category: Category;
@@ -33,9 +34,11 @@ export default function CategoryItem({ category }: Props) {
       </div>
       <div className="flex items-center gap-2">
         {/* EDIT */}
-        <button className="p-2 rounded-md hover:bg-[var(--color-bg-muted)]">
-          <Pencil className="w-4 h-4 text-blue-500" />
-        </button>
+        <CategoryDialog category={category}>
+          <button className="p-2 rounded-md hover:bg-[var(--color-bg-muted)]">
+            <Pencil className="w-4 h-4 text-blue-500" />
+          </button>
+        </CategoryDialog>
         {/* DELETE */}
         <button className="p-2 rounded-md hover:bg-[var(--color-bg-muted)]">
           <Trash className="w-4 h-4 text-red-500" />
