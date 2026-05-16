@@ -2,7 +2,7 @@
 
 import { Upload, X } from "lucide-react";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,18 +10,16 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 import { CustomSelect } from "@/components/Systems/SelectComponent";
-import { apiClient } from "@/libs/api";
-import { getToken } from "@/libs/getCookies";
 import { Category } from "@/libs/types";
 import { ProductsTypes } from "@/types/ProductTypes";
 import { resizeImage } from "@/Utilits/resizeImage";
 
 interface Props {
   product?: ProductsTypes;
+  categories: Category[];
 }
 
-export default function ProductForm({ product }: Props) {
-  const [categories, setCategories] = useState<Category[]>([]);
+export default function ProductForm({ product, categories }: Props) {
   const [imagePreview, setPreview] = useState<string | null>(
     product?.banner || null,
   );
@@ -29,19 +27,6 @@ export default function ProductForm({ product }: Props) {
   const [selectedCategory, setSelectedCategory] = useState<string>(
     product?.category.id || "",
   );
-
-  useEffect(() => {
-    async function load() {
-      const token = await getToken();
-      const data = await apiClient<Category[]>("/categories", { token });
-      setCategories(data);
-      // Se estiver editando, garante que o valor seja setado quando as categorias carregarem
-      if (product?.category.id) {
-        setSelectedCategory(product.category.id);
-      }
-    }
-    load();
-  }, [product]);
 
   async function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];

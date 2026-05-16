@@ -5,12 +5,14 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useToast } from "@/contexts/ToastContext";
-import { Loader2, Plus } from "lucide-react"; // Importei o Loader2 para o spinner
+import { Category } from "@/libs/types";
+import { Loader2, Plus } from "lucide-react";
 import { useActionState, useEffect, useState } from "react";
 
 import { ServiceProducts } from "@/service/products/serviceProduct";
@@ -20,16 +22,15 @@ import ProductForm from "./ProductForm";
 interface Props {
   product?: ProductsTypes;
   children?: React.ReactNode;
+  categories: Category[];
 }
 
-// 1. Defina um estado inicial claro para evitar uso de "!" depois
 const initialState = { message: "", success: false };
 
-export default function ProductDialog({ product, children }: Props) {
+export default function ProductDialog({ product, children, categories }: Props) {
   const [open, setOpen] = useState(false);
   const { showToast } = useToast();
 
-  // 2. O React 19 fornece o isPending diretamente no useActionState!
   const [state, formAction, isPending] = useActionState(
     ServiceProducts,
     initialState,
@@ -38,7 +39,6 @@ export default function ProductDialog({ product, children }: Props) {
   const isEdit = !!product;
 
   useEffect(() => {
-    // Só exibe o toast se houver uma mensagem
     if (!state?.message) return;
 
     showToast(state.message, state.success ? "success" : "error");
@@ -46,7 +46,7 @@ export default function ProductDialog({ product, children }: Props) {
     if (state.success) {
       setOpen(false);
     }
-  }, [state, showToast]); // 3. showToast adicionado às dependências
+  }, [state, showToast]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -55,7 +55,7 @@ export default function ProductDialog({ product, children }: Props) {
           children
         ) : (
           <Button>
-            <Plus className="w-4 h-4 mr-2" /> {/* Espaçamento adicionado */}
+            <Plus className="w-4 h-4 mr-2" />
             Novo Produto
           </Button>
         )}
@@ -66,23 +66,26 @@ export default function ProductDialog({ product, children }: Props) {
           <DialogTitle className="text-center">
             {isEdit ? "Editar Produto" : "Novo Produto"}
           </DialogTitle>
+
+          <DialogDescription className="text-center">
+            {isEdit
+              ? "Altere as informações abaixo para atualizar o produto no estoque."
+              : "Preencha os campos abaixo para cadastrar um novo produto na plataforma."}
+          </DialogDescription>
         </DialogHeader>
 
         <form action={formAction}>
-          {/* 4. Garante que o ID seja enviado na Server Action se for edição */}
           {isEdit && <input type="hidden" name="id" value={product.id} />}
 
-          <ProductForm product={product} />
+          <ProductForm product={product} categories={categories} />
 
           <div className="flex justify-end gap-2 mt-4">
             <DialogClose asChild>
-              {/* Desabilita o cancelar enquanto estiver salvando para evitar bugs */}
               <Button type="button" variant="outline" disabled={isPending}>
                 Cancelar
               </Button>
             </DialogClose>
 
-            {/* 5. UX aprimorada com estado de carregamento */}
             <Button type="submit" disabled={isPending}>
               {isPending ? (
                 <>

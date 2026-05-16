@@ -4,15 +4,17 @@ import ProductDialog from "@/components/forms/products/product-dialog";
 import ProductItem from "@/components/forms/products/Product-Item";
 import { apiClient } from "@/libs/api";
 import { getToken } from "@/libs/getCookies";
+import { Category } from "@/libs/types";
 import { ProductsTypes } from "@/types/ProductTypes";
 import { PackageSearch } from "lucide-react";
 
 export default async function Products() {
   const token = await getToken();
 
-  const prods = await apiClient<ProductsTypes[]>("/products", {
-    token: token!,
-  });
+  const [prods, categories] = await Promise.all([
+    apiClient<ProductsTypes[]>("/products", { token: token! }),
+    apiClient<Category[]>("/categories", { token: token! }),
+  ]);
 
   return (
     <div className="space-y-4 sm:space-y-6">
@@ -22,14 +24,14 @@ export default async function Products() {
           Produtos
         </h1>
         <div className="text-sm sm:text-base mt-1"></div>
-        <ProductDialog />
+        <ProductDialog categories={categories} />
       </div>
 
       {prods && prods.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
           {/* lista */}
           {prods.map((product) => (
-            <ProductItem key={product.id} product={product} />
+            <ProductItem key={product.id} product={product} categories={categories} />
           ))}
         </div>
       ) : (

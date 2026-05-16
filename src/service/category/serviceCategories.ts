@@ -14,12 +14,12 @@ export async function ServiceCategories(
     const token = await getToken();
 
     const name = formData.get("name") as string;
+    const id = formData.get("id") as string | null;
 
-    // ✅ VALIDAÇÃO
     if (!name || name.trim() === "") {
       return {
         success: false,
-        message: "Nome da Categoria Obrigatorio ",
+        message: "Nome da Categoria Obrigatorio",
         errors: {
           name: "Nome é obrigatório",
         },
@@ -28,29 +28,37 @@ export async function ServiceCategories(
 
     const payLoad = { name };
 
-    await apiClient<Category>("/categories", {
-      method: "POST",
-      body: JSON.stringify(payLoad),
-      token,
-    });
+    if (id) {
+      // Editar
+      await apiClient<Category>(`/categories/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(payLoad),
+        token,
+      });
+    } else {
+      // Criar
+      await apiClient<Category>("/categories", {
+        method: "POST",
+        body: JSON.stringify(payLoad),
+        token,
+      });
+    }
 
-    // ✅ atualiza lista
     revalidatePath("/dashboard/categories");
 
     return {
       success: true,
-      message: "Categoria cadastrada com sucesso",
+      message: id
+        ? "Categoria atualizada com sucesso"
+        : "Categoria cadastrada com sucesso",
     };
   } catch (err: any) {
-    console.error("Register error:", err);
-
-    // 🔥 ERRO VINDO DA API
-    const apiError = err?.response?.data;
+    console.error("Category error:", err);
 
     return {
       success: false,
-      message: apiError?.message || "Erro ao cadastrar categoria",
-      errors: apiError?.errors || {},
+      message: err?.message || "Erro ao salvar categoria",
+      errors: {},
     };
   }
 }

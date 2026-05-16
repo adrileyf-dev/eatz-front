@@ -2,6 +2,7 @@
 
 import DeleteButtonComponent from "@/components/Systems/DeleteButtonComponent";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Category } from "@/libs/types";
 import { ProductsTypes } from "@/types/ProductTypes";
 import { formatCurrency } from "@/Utilits/format";
 import { Package, Pencil, Tags } from "lucide-react";
@@ -10,9 +11,10 @@ import ProductDialog from "./product-dialog";
 
 interface ProductItemProps {
   product: ProductsTypes;
+  categories: Category[];
 }
 
-export default function ProductItem({ product }: ProductItemProps) {
+export default function ProductItem({ product, categories }: ProductItemProps) {
   return (
     <div className="w-full">
       <Card className="bg-app-card border-app-border transition-shadow hover:shadow-md text-white overflow-hidden flex flex-col h-full group">
@@ -83,7 +85,7 @@ export default function ProductItem({ product }: ProductItemProps) {
 
             {/* BOTÕES DE AÇÃO (MAIORES PARA O TOUCH) */}
             <div className="flex items-center gap-1">
-              <ProductDialog product={product}>
+              <ProductDialog product={product} categories={categories}>
                 <button
                   className="p-2.5 rounded-lg hover:bg-blue-50 text-blue-600 transition-colors"
                   title="Editar"
